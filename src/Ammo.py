@@ -1,5 +1,5 @@
 ## @file Ammo.py
-#  @author Tingyu Shi, Jiacheng Wu, Qianlin Chen
+#  @author Tingyu Shi
 #  @brief Contains a class to represent a the Ammo game item.
 #  @date Apr 7, 2022
 
@@ -17,7 +17,7 @@ class Ammo(pygame.sprite.Sprite):
     def __init__(self, x, y, speed):
         super().__init__()
         self.__speed = speed
-        self.__itemType = 3
+        self.__itemType = 3   #In a monster matrix, each item will have an item type number, for Ammo game item, it is 3
         self.image = pygame.image.load('Picture/ammo.png')
         self.image = pygame.transform.scale(self.image, (30, 30))
         self.rect = self.image.get_rect(topleft = (x, y))

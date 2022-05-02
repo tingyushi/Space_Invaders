@@ -1,5 +1,5 @@
 ## @file Bomb.py
-#  @author Tingyu Shi, Jiacheng Wu, Qianlin Chen
+#  @author Tingyu Shi
 #  @brief Contains a class to represent a the Bomb game item.
 #  @date Apr 7, 2022
 
@@ -17,7 +17,7 @@ class Bomb(pygame.sprite.Sprite):
     def __init__(self, x, y, speed):
         super().__init__()
         self.__speed = speed
-        self.__itemType = 4
+        self.__itemType = 4  #In a monster matrix, each item has an item number. For bomb game item, it is 4.
         self.image = pygame.image.load('Picture/Bomb.png')
         self.image = pygame.transform.scale(self.image, (30, 30))
         self.rect = self.image.get_rect(topleft = (x, y))
