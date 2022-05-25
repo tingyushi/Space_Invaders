@@ -1,5 +1,5 @@
 ## @file Display.py
-#  @author Tingyu Shi, Jiacheng Wu, Qianlin Chen
+#  @author Tingyu Shi
 #  @brief Contains multiple classes to display different game elements on to the screen.
 #  @date Apr 7, 2022
 

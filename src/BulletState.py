@@ -1,5 +1,5 @@
 ## @file BulletState.py
-#  @author Tingyu Shi, Jiacheng Wu, Qianlin Chen
+#  @author Tingyu Shi
 #  @brief Contains a Enum class to represent two states of the bullet.
 #  @date Apr 7, 2022
 

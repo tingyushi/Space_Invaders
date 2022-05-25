@@ -1,5 +1,5 @@
 ## @file DoubleController.py
-#  @author Tingyu Shi, Jiacheng Wu, Qianlin Chen
+#  @author Tingyu Shi
 #  @brief Contains a class to represent the controller of the single player mode.
 #  @date Apr 7, 2022
 import pygame

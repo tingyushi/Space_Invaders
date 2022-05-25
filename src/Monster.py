@@ -1,5 +1,5 @@
 ## @file Monster.py
-#  @author Tingyu Shi, Jiacheng Wu, Qianlin Chen
+#  @author Tingyu Shi
 #  @brief Contains a class to represent a the Monster.
 #  @date Apr 7, 2022
 

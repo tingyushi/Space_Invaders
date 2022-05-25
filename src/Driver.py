@@ -1,5 +1,5 @@
 ## @file Driver.py
-#  @author Tingyu Shi, Jiacheng Wu, Qianlin Chen
+#  @author Tingyu Shi
 #  @brief The driver file of the game
 #  @date Apr 7, 2022
 
