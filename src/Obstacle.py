@@ -1,5 +1,5 @@
 ## @file Obstacle.py
-#  @author Tingyu Shi, Jiacheng Wu, Qianlin Chen
+#  @author Tingyu Shi
 #  @brief Contains two classes needed to create obstacles.
 #  @date Apr 7, 2022
 

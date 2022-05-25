@@ -1,5 +1,5 @@
 ## @file TotalController.py
-#  @author Tingyu Shi, Jiacheng Wu, Qianlin Chen
+#  @author Tingyu Shi
 #  @brief Contains a class to represent the controller of the overall game.
 #  @date Apr 7, 2022
 import pygame

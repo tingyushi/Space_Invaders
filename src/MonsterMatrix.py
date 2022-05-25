@@ -1,5 +1,5 @@
 ## @file MonsterMatrix.py
-#  @author Tingyu Shi, Jiacheng Wu, Qianlin Chen
+#  @author Tingyu Shi
 #  @brief Contains a class to represent a the MonsterMatrix.
 #  @date Apr 7, 2022
 

@@ -1,5 +1,5 @@
 ## @file Score.py
-#  @author Tingyu Shi, Jiacheng Wu, Qianlin Chen
+#  @author Tingyu Shi
 #  @brief Contains a class to represent the score of the game.
 #  @date Apr 7, 2022
 
