@@ -1,0 +1,80 @@
+\documentclass[12pt]{article}
+
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{paralist}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{color}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{multirow}
+\geometry{margin = 0.75in}
+
+\title{SE 3XA3: Problem Statement}
+
+\begin{document}
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%Team Information%%%%%%%%%%%%%%%%%%%%%%
+{\Large Team Information:}
+\begin{table}[htp]
+\centering
+{\Large
+\begin{tabular}{|c|c|c|}
+\hline
+\multicolumn{1}{|l|}{Team Number} & Name         & MACID   \\ \hline
+\multirow{3}{*}{L03 G07}          & Qianlin Chen & chenq84 \\ \cline{2-3} 
+                                  & Jiacheng Wu  & wuj187  \\ \cline{2-3} 
+                                  & Tingyu Shi   & shit19  \\ \hline
+\end{tabular}
+}
+\end{table}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{table}[htp]
+\caption{Revision History} 
+\begin{tabularx}{\textwidth}{llX}
+\toprule
+\textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
+\midrule
+January 26, 2021 & All team members & Initial Document\\
+January 27, 2021 & All team members & Improve document structure and add information to importance\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\newpage
+
+
+
+\section{The problem addressed}
+This project will involve the redevelopment of the game called Space Invader. In this project, we will handle the problems with poor graphics of the original game and the limited functionality of the game. First, we will reimplement the game using software engineering principles. Additionally, this project will also focus on upgrading the graphic feature of the game. Lastly, this project will also add more functionality(game items, modes, etc) to the original game.
+
+\section{Importance of this problem}
+The problems we are trying to solve are important since they can improve the performance of the original game and make it playable by the additional game functions and extra items (like bombs, life) for the players.\\ 
+The game frame we used as reference does not contain any functional parts. Besides, the amount of enemies increases crazily after level three which makes players easily fail in the entry level and can not move forward.\\
+To maintain the difficulty of this game after adding items, the amount of life for players in our design is limited and will not renew when they enter the next level, unlike the original game.\\
+For team members, this project is a great opportunity to apply 
+software principles to real practice. 
+
+\section{Context of this problem}
+\subsection{Stakeholders}
+\begin{itemize}
+\item Players: Players are users of this project. Players will play this game and provide feedback to the development team.
+\item Team members: Team members will be responsible for designing,
+writing all kinds of documents, coding and testing.
+\item TAs and course Instructor: TAs and course Instructor set deadlines and assess the work done by development team.
+\item Future software developers: The whole project will be open-source and include license for future software developers to
+redevelop.
+\end{itemize}
+\subsection{Running Environment}
+This game will be developed in python. The original project only contains the executable file for Windows users. However, after our redevelopment, we will make executable files for MacOS and Linux users. As a result, this game will be accessible for people as long as they use Windows, MacOS or Linux as their operating systems. In addition, the players should install pygame on their desktops or laptops.
+
+
+\end{document}

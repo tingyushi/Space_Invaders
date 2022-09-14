@@ -1,0 +1,1992 @@
+\documentclass[12pt]{article}
+
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{paralist}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{color}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{multirow}
+\usepackage[round]{natbib}
+
+\geometry{margin = 0.75in}
+\title{SE 3XA3: MIS\\Space Invaders}
+
+\begin{document}
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%Team Information%%%%%%%%%%%%%%%%%%%%%%
+{\Large Team Information:}
+\begin{table}[htp]
+\centering
+{\Large
+\begin{tabular}{|c|c|c|}
+\hline
+\multicolumn{1}{|l|}{Team Number} & Name         & MACID   \\ \hline
+\multirow{3}{*}{L03 G07}          & Qianlin Chen & chenq84 \\ \cline{2-3} 
+                                  & Jiacheng Wu  & wuj187  \\ \cline{2-3} 
+                                  & Tingyu Shi   & shit19  \\ \hline
+\end{tabular}
+}
+\end{table}
+
+%%%%%%%%%%% Revision History%%%%%%%%%%%%%
+\newpage
+\begin{table}[htp]
+\caption{Revision History} 
+\begin{tabularx}{\textwidth}{llX}
+\toprule
+\textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
+\midrule
+January 26, 2022 & All team members & Initial Document\\
+March 18, 2022 & Qianlin Chen & Display Modules\\
+March 10, 2022 & Jiacheng Wu & Control Modules\\
+March 10, 2022 & Tingyu Shi & Model modules\\
+\bottomrule
+\end{tabularx}
+\end{table}
+\newpage
+%%%%%%%%%%%%%%Contents%%%%%%%%%%%%%%%%
+\tableofcontents
+\listoftables
+\listoffigures
+\cleardoublepage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%MonsterColor%%%%%%%%%%%%%%%%
+\section{MonsterColor Module}
+
+\subsection*{Module}
+MonsterColor
+
+\subsection*{Uses}
+None
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+MonsterType = $\{RED, BLUE, PINK\}$ \# Represent Three colors of monsters
+\subsubsection*{Exported Access Programs}
+None (This is an Enum class in python)
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+None
+\subsubsection*{State Invariant}
+None
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+None
+\subsubsection*{Consideration}
+When implementing in Python, use Enum class.
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%BulletState%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{BulletState Module}
+
+\subsection*{Module}
+BulletState
+
+\subsection*{Uses}
+None
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+BulletState = $\{FIRE, READY\}$ \# Represent two states of bullets
+\subsubsection*{Exported Access Programs}
+None (This is an Enum class in python)
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+None
+\subsubsection*{State Invariant}
+None
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+None
+\subsubsection*{Consideration}
+When implementing in Python, use Enum class.
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%Monster%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Monster Module}
+
+\subsection*{Template Module}
+Monster
+
+\subsection*{Uses}
+MonsterColor, Bullet
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+Monster = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new Monster & $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$, $MonterColor$ & Monster & IllegalArgumentException\\
+\hline
+setX & $\mathbb{R}$ &  & IllegalArgumentException\\
+\hline
+setY & $\mathbb{R}$ &  & IllegalArgumentException\\
+\hline
+getX &    & $\mathbb{R}$ & \\
+\hline
+getY &    & $\mathbb{R}$ & \\
+\hline
+getColor & & $MonsterColor$ &\\
+\hline
+reduce\_life & & & \\
+\hline
+isDead & & $\mathbb{B}$ & \\
+\hline
+move & & &\\
+\hline
+shoot & & $Bullet$ &\\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+$\mathit{speed}$: $\mathbb{R}$\\
+$\mathit{X}$: $\mathbb{R}$\\
+$\mathit{Y}$: $\mathbb{R}$\\
+$\mathit{monster\_color}$: $MonsterColor$\\
+$\mathit{X\_change}$: $\mathbb{R}$\\
+$\mathit{Y\_change}$: $\mathbb{R}$\\
+$\mathit{life}$: $\mathbb{N}$
+\subsubsection*{State Invariant}
+$0 \leq X \leq 736$
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent new Monster($\mathit{s}, \mathit{x}, \mathit{y}, \mathit{color}$):
+\begin{itemize}
+\item transition: \\$\mathit{speed}, \mathit{X}, \mathit{Y},
+  \mathit{monster\_color}, \mathit{X\_change}, \mathit{Y\_change} := \mathit{s}, \mathit{x},
+  \mathit{y}, \mathit{color}, \mathit{s}, 40$\\
+  $color = MonsterColor.GREEN \Rightarrow  life := 1$\\
+  $color = MonsterColor.BLUE \Rightarrow  life := 2$\\
+  $color = MonsterColor.PINK \Rightarrow  life := 3$
+\item output: $out := \mathit{self}$
+\item exception: exc := $((\mathit{s} < 0) \vee (\mathit{x} < 0) \vee 
+  (\mathit{y} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent setX($\mathit{x}$):
+\begin{itemize}
+\item transition: $X := x$ 
+\item output: none
+\item exception: $((\mathit{x} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent setY($\mathit{y}$):
+\begin{itemize}
+\item transition: $Y := y$ 
+\item output: none
+\item exception: $((\mathit{y} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent getX():
+\begin{itemize}
+\item transition: none
+\item output: $out := X$
+\item exception: none
+\end{itemize}
+
+\noindent getY():
+\begin{itemize}
+\item transition: none
+\item output: $out := Y$
+\item exception: none
+\end{itemize}
+
+\noindent getColor():
+\begin{itemize}
+\item transition: none
+\item output: $out := monster\_color$
+\item exception: none
+\end{itemize}
+
+\noindent reduce\_life():
+\begin{itemize}
+\item transition: $life := life - 1$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent isDead():
+\begin{itemize}
+\item transition: none
+\item output: $life = 0$
+\item exception: none
+\end{itemize}
+
+\noindent move():
+\begin{itemize}
+\item transition: \\
+$X := X + X\_change$\\
+$X \leq 0 \Rightarrow (X\_change,\ Y  := speed,\ Y + Y\_change)$\\
+$X \geq 736 \Rightarrow (X\_change,\ Y  := -1*speed,\ Y + Y\_change)$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent shoot():
+\begin{itemize}
+\item transition: none
+\item output: $new\ Bullet(20,\ X,\ Y)$
+\item exception: none
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%SpaceShip%%%%%%%%%%%%%%%%%%%%%%%%
+\section{SpaceShip Module}
+
+\subsection*{Template Module}
+SpaceShip
+
+\subsection*{Uses}
+Bullet
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+SpaceShip = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new Monster & $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$ & SpaceShip & IllegalArgumentException\\
+\hline
+setX & $\mathbb{R}$ &  & IllegalArgumentException\\
+\hline
+setY & $\mathbb{R}$ &  & IllegalArgumentException\\
+\hline
+getX &    & $\mathbb{R}$ & \\
+\hline
+getY &    & $\mathbb{R}$ & \\
+\hline
+moveLeft & & &\\
+\hline
+moveRight & & &\\
+\hline
+stopMove & & &\\
+\hline
+reduce\_life & & & \\
+\hline
+isDead & & $\mathbb{B}$ & \\
+\hline
+boundary\_detection & & &\\
+\hline
+shoot & & $Bullet$ &\\
+\hline
+update &&&\\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+$\mathit{speed}$: $\mathbb{R}$\\
+$\mathit{X}$: $\mathbb{R}$\\
+$\mathit{Y}$: $\mathbb{R}$\\
+$\mathit{X\_change}$: $\mathbb{R}$\\
+$\mathit{life}$: $\mathbb{N}$
+\subsubsection*{State Invariant}
+$0 \leq X \leq 736$\\
+$0 \leq life \leq 5$
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent new SpaceShip($\mathit{s}, \mathit{x}, \mathit{y}$):
+\begin{itemize}
+\item transition: $\mathit{speed}, \mathit{X}, \mathit{Y}, \mathit{X\_change}, \mathit{life} := \mathit{s}, \mathit{x},
+  \mathit{y}, 0, 5$
+\item output: $out := \mathit{self}$
+\item exception: exc := $((\mathit{s} < 0) \vee (\mathit{x} < 0) \vee 
+  (\mathit{y} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent setX($\mathit{x}$):
+\begin{itemize}
+\item transition: $X := x$ 
+\item output: none
+\item exception: $((\mathit{x} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent setY($\mathit{y}$):
+\begin{itemize}
+\item transition: $Y := y$ 
+\item output: none
+\item exception: $((\mathit{y} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent getX():
+\begin{itemize}
+\item transition: none
+\item output: $out := X$
+\item exception: none
+\end{itemize}
+
+\noindent getY():
+\begin{itemize}
+\item transition: none
+\item output: $out := Y$
+\item exception: none
+\end{itemize}
+
+\noindent moveLeft():
+\begin{itemize}
+\item transition: $X\_change := -1 * speed$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent moveRight():
+\begin{itemize}
+\item transition: $X\_change := speed$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent stopMove():
+\begin{itemize}
+\item transition: $X\_change := 0$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent reduce\_life():
+\begin{itemize}
+\item transition: $life := life - 1$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent isDead():
+\begin{itemize}
+\item transition: none
+\item output: $life = 0$
+\item exception: none
+\end{itemize}
+
+\noindent boundary\_detection():
+\begin{itemize}
+\item transition: \\
+$X \leq 0 \Rightarrow (X\_change := 0)$\\
+$X \geq 736 \Rightarrow (X\_change  := 736)$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent shoot():
+\begin{itemize}
+\item transition: none
+\item output: $new\ Bullet(20,\ X,\ Y)$
+\item exception: none
+\end{itemize}
+
+\noindent update():
+\begin{itemize}
+\item transition: $X := X + X\_change$
+\item output: none
+\item exception: none
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Bullet%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Bullet Module}
+
+\subsection*{Template Module}
+Bullet
+
+\subsection*{Uses}
+none
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+Bullet = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new Bullet & $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$ & Bullet & IllegalArgumentException\\
+\hline
+setX & $\mathbb{R}$ &  & IllegalArgumentException\\
+\hline
+setY & $\mathbb{R}$ &  & IllegalArgumentException\\
+\hline
+getX &    & $\mathbb{R}$ & \\
+\hline
+getY &    & $\mathbb{R}$ & \\
+\hline
+setState & $BulletState$ & &\\
+\hline
+getState & & $BulletState$ &\\
+\hline
+move & & &\\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+$\mathit{speed}$: $\mathbb{R}$\\
+$\mathit{X}$: $\mathbb{R}$\\
+$\mathit{Y}$: $\mathbb{R}$\\
+$\mathit{Y\_change}$: $\mathbb{R}$\\
+$\mathit{state}$: $BulletState$
+\subsubsection*{State Invariant}
+none
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent new Bullet($\mathit{s}, \mathit{x}, \mathit{y}$):
+\begin{itemize}
+\item transition: $\mathit{speed}, \mathit{X}, \mathit{Y}, \mathit{Y\_change}, \mathit{state} := \mathit{s}, \mathit{x},
+  \mathit{y}, s, BulletState.READY$
+\item output: $out := \mathit{self}$
+\item exception: exc := $((\mathit{s} < 0) \vee (\mathit{x} < 0) \vee 
+  (\mathit{y} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent setX($\mathit{x}$):
+\begin{itemize}
+\item transition: $X := x$ 
+\item output: none
+\item exception: $((\mathit{x} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent setY($\mathit{y}$):
+\begin{itemize}
+\item transition: $Y := y$ 
+\item output: none
+\item exception: $((\mathit{y} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent getX():
+\begin{itemize}
+\item transition: none
+\item output: $out := X$
+\item exception: none
+\end{itemize}
+
+\noindent getY():
+\begin{itemize}
+\item transition: none
+\item output: $out := Y$
+\item exception: none
+\end{itemize}
+
+\noindent setState($\mathit{newState}$):
+\begin{itemize}
+\item transition: $state := newState$ 
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent getState():
+\begin{itemize}
+\item transition: none
+\item output: $out := state$
+\item exception: none
+\end{itemize}
+
+\noindent move():
+\begin{itemize}
+\item transition: \\
+$Y \leq 0 \Rightarrow Y,\ state := 530,\ BulletState.READY$\\
+$state = BulletState.FIRE \Rightarrow Y := Y - Y\_change$
+\item output: none
+\item exception: none
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Score%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Score Module}
+
+\subsection*{Template Module}
+Score
+
+\subsection*{Uses}
+none
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+Score = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new score &  & Score &\\
+\hline
+getScore &    & $\mathbb{N}$ & \\
+\hline
+increaseAmount & $\mathbb{N}$ & &\\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+$\mathit{score}$: $\mathbb{N}$
+\subsubsection*{State Invariant}
+$score \geq 0$
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent new Score():
+\begin{itemize}
+\item transition: $\mathit{score} := 0$
+\item output: $out := \mathit{self}$
+\item exception: exc := none
+\end{itemize}
+\newpage
+
+\noindent getScore():
+\begin{itemize}
+\item transition: none
+\item output: $out := score$
+\item exception: none
+\end{itemize}
+
+\noindent increaseAmount($\mathit{amount}$):
+\begin{itemize}
+\item transition: $score := score + amount$ 
+\item output: none
+\item exception: none
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%Obstacle%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Obstacle Module}
+
+\subsection*{Template Module}
+Obstacle
+
+\subsection*{Uses}
+none
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+Obstacle = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new Obstacle & $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$ & Obstacle &\\
+\hline
+reduce\_area &&&\\
+\hline
+getX &    & $\mathbb{R}$ & \\
+\hline
+getY &    & $\mathbb{R}$ & \\
+\hline
+getArea &    & $\mathbb{R}$ & \\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+$\mathit{X}$: $\mathbb{R}$\\
+$\mathit{Y}$: $\mathbb{R}$\\
+$\mathit{Width}$: $\mathbb{R}$\\
+$\mathit{Height}$: $\mathbb{R}$\\
+$\mathit{Area}$: $\mathbb{R}$
+\subsubsection*{State Invariant}
+$all\ state\ variables \geq 0$
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent new Obstacle($\mathit{x}, \mathit{y}, \mathit{w}, \mathit{h}$):
+\begin{itemize}
+\item transition: $\mathit{X}, \mathit{Y}, \mathit{Width}, \mathit{Height}, \mathit{Area} := x,\ y,\ w,\ h,\ w * h$
+\item output: $out := \mathit{self}$
+\item exception: exc := none
+\end{itemize}
+
+\noindent getX():
+\begin{itemize}
+\item transition: none
+\item output: $out := X$
+\item exception: none
+\end{itemize}
+
+\noindent getY():
+\begin{itemize}
+\item transition: none
+\item output: $out := Y$
+\item exception: none
+\end{itemize}
+
+\noindent getArea():
+\begin{itemize}
+\item transition: none
+\item output: $out := Area$
+\item exception: none
+\end{itemize}
+
+\noindent reduce\_area($\mathit{amount}$):
+\begin{itemize}
+\item transition: $Area := Area - amount$ 
+\item output: none
+\item exception: none
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Ammo%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Ammo Module}
+
+\subsection*{Template Module}
+Ammo
+
+\subsection*{Uses}
+None
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+Ammo = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new Ammo & $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$ & Ammo & IllegalArgumentException\\
+\hline
+setX & $\mathbb{R}$ &  & IllegalArgumentException\\
+\hline
+setY & $\mathbb{R}$ &  & IllegalArgumentException\\
+\hline
+getX &    & $\mathbb{R}$ & \\
+\hline
+getY &    & $\mathbb{R}$ & \\
+\hline
+reduce\_life & & & \\
+\hline
+isDead & & $\mathbb{B}$ & \\
+\hline
+move & & &\\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+$\mathit{speed}$: $\mathbb{R}$\\
+$\mathit{X}$: $\mathbb{R}$\\
+$\mathit{Y}$: $\mathbb{R}$\\
+$\mathit{X\_change}$: $\mathbb{R}$\\
+$\mathit{Y\_change}$: $\mathbb{R}$\\
+$\mathit{life}$: $\mathbb{N}$
+\subsubsection*{State Invariant}
+$0 \leq X \leq 736$
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent new Bomb($\mathit{s}, \mathit{x}, \mathit{y}$):
+\begin{itemize}
+\item transition: \\$\mathit{speed}, \mathit{X}, \mathit{Y}, \mathit{X\_change}, \mathit{Y\_change}, \mathit{life} := \mathit{s}, \mathit{x},
+  \mathit{y}, \mathit{s}, 40, 1$
+\item output: $out := \mathit{self}$
+\item exception: exc := $((\mathit{s} < 0) \vee (\mathit{x} < 0) \vee 
+  (\mathit{y} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent setX($\mathit{x}$):
+\begin{itemize}
+\item transition: $X := x$ 
+\item output: none
+\item exception: $((\mathit{x} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent setY($\mathit{y}$):
+\begin{itemize}
+\item transition: $Y := y$ 
+\item output: none
+\item exception: $((\mathit{y} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent getX():
+\begin{itemize}
+\item transition: none
+\item output: $out := X$
+\item exception: none
+\end{itemize}
+
+\noindent getY():
+\begin{itemize}
+\item transition: none
+\item output: $out := Y$
+\item exception: none
+\end{itemize}
+
+\noindent reduce\_life():
+\begin{itemize}
+\item transition: $life := life - 1$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent isDead():
+\begin{itemize}
+\item transition: none
+\item output: $life = 0$
+\item exception: none
+\end{itemize}
+
+\noindent move():
+\begin{itemize}
+\item transition: \\
+$X := X + X\_change$\\
+$X \leq 0 \Rightarrow (X\_change,\ Y  := speed,\ Y + Y\_change)$\\
+$X \geq 736 \Rightarrow (X\_change,\ Y  := -1*speed,\ Y + Y\_change)$
+\item output: none
+\item exception: none
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%Bomb%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Bomb Module}
+
+\subsection*{Template Module}
+Bomb
+
+\subsection*{Uses}
+None
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+Bomb = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new Bomb & $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$ & Bomb & IllegalArgumentException\\
+\hline
+setX & $\mathbb{R}$ &  & IllegalArgumentException\\
+\hline
+setY & $\mathbb{R}$ &  & IllegalArgumentException\\
+\hline
+getX &    & $\mathbb{R}$ & \\
+\hline
+getY &    & $\mathbb{R}$ & \\
+\hline
+reduce\_life & & & \\
+\hline
+isDead & & $\mathbb{B}$ & \\
+\hline
+move & & &\\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+$\mathit{speed}$: $\mathbb{R}$\\
+$\mathit{X}$: $\mathbb{R}$\\
+$\mathit{Y}$: $\mathbb{R}$\\
+$\mathit{X\_change}$: $\mathbb{R}$\\
+$\mathit{Y\_change}$: $\mathbb{R}$\\
+$\mathit{life}$: $\mathbb{N}$
+\subsubsection*{State Invariant}
+$0 \leq X \leq 736$
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent new Ammo($\mathit{s}, \mathit{x}, \mathit{y}$):
+\begin{itemize}
+\item transition: \\$\mathit{speed}, \mathit{X}, \mathit{Y}, \mathit{X\_change}, \mathit{Y\_change}, \mathit{life} := \mathit{s}, \mathit{x},
+  \mathit{y}, \mathit{s}, 40, 1$
+\item output: $out := \mathit{self}$
+\item exception: exc := $((\mathit{s} < 0) \vee (\mathit{x} < 0) \vee 
+  (\mathit{y} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent setX($\mathit{x}$):
+\begin{itemize}
+\item transition: $X := x$ 
+\item output: none
+\item exception: $((\mathit{x} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent setY($\mathit{y}$):
+\begin{itemize}
+\item transition: $Y := y$ 
+\item output: none
+\item exception: $((\mathit{y} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent getX():
+\begin{itemize}
+\item transition: none
+\item output: $out := X$
+\item exception: none
+\end{itemize}
+
+\noindent getY():
+\begin{itemize}
+\item transition: none
+\item output: $out := Y$
+\item exception: none
+\end{itemize}
+
+\noindent reduce\_life():
+\begin{itemize}
+\item transition: $life := life - 1$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent isDead():
+\begin{itemize}
+\item transition: none
+\item output: $life = 0$
+\item exception: none
+\end{itemize}
+
+\noindent move():
+\begin{itemize}
+\item transition: \\
+$X := X + X\_change$\\
+$X \leq 0 \Rightarrow (X\_change,\ Y  := speed,\ Y + Y\_change)$\\
+$X \geq 736 \Rightarrow (X\_change,\ Y  := -1*speed,\ Y + Y\_change)$
+\item output: none
+\item exception: none
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Heart%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Heart Module}
+
+\subsection*{Template Module}
+Heart
+
+\subsection*{Uses}
+None
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+Heart = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new Heart & $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$ & Heart & IllegalArgumentException\\
+\hline
+setX & $\mathbb{R}$ &  & IllegalArgumentException\\
+\hline
+setY & $\mathbb{R}$ &  & IllegalArgumentException\\
+\hline
+getX &    & $\mathbb{R}$ & \\
+\hline
+getY &    & $\mathbb{R}$ & \\
+\hline
+reduce\_life & & & \\
+\hline
+isDead & & $\mathbb{B}$ & \\
+\hline
+move & & &\\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+$\mathit{speed}$: $\mathbb{R}$\\
+$\mathit{X}$: $\mathbb{R}$\\
+$\mathit{Y}$: $\mathbb{R}$\\
+$\mathit{X\_change}$: $\mathbb{R}$\\
+$\mathit{Y\_change}$: $\mathbb{R}$\\
+$\mathit{life}$: $\mathbb{N}$
+\subsubsection*{State Invariant}
+$0 \leq X \leq 736$
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent new Heart($\mathit{s}, \mathit{x}, \mathit{y}$):
+\begin{itemize}
+\item transition: \\$\mathit{speed}, \mathit{X}, \mathit{Y}, \mathit{X\_change}, \mathit{Y\_change}, \mathit{life} := \mathit{s}, \mathit{x},
+  \mathit{y}, \mathit{s}, 40, 1$
+\item output: $out := \mathit{self}$
+\item exception: exc := $((\mathit{s} < 0) \vee (\mathit{x} < 0) \vee 
+  (\mathit{y} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent setX($\mathit{x}$):
+\begin{itemize}
+\item transition: $X := x$ 
+\item output: none
+\item exception: $((\mathit{x} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent setY($\mathit{y}$):
+\begin{itemize}
+\item transition: $Y := y$ 
+\item output: none
+\item exception: $((\mathit{y} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent getX():
+\begin{itemize}
+\item transition: none
+\item output: $out := X$
+\item exception: none
+\end{itemize}
+
+\noindent getY():
+\begin{itemize}
+\item transition: none
+\item output: $out := Y$
+\item exception: none
+\end{itemize}
+
+\noindent reduce\_life():
+\begin{itemize}
+\item transition: $life := life - 1$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent isDead():
+\begin{itemize}
+\item transition: none
+\item output: $life = 0$
+\item exception: none
+\end{itemize}
+
+\noindent move():
+\begin{itemize}
+\item transition: \\
+$X := X + X\_change$\\
+$X \leq 0 \Rightarrow (X\_change,\ Y  := speed,\ Y + Y\_change)$\\
+$X \geq 736 \Rightarrow (X\_change,\ Y  := -1*speed,\ Y + Y\_change)$
+\item output: none
+\item exception: none
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%CollisionDetection%%%%%%%%%%%%%%%
+\section{CollisionDectection Module}
+
+\subsection*{Service Module}
+Service
+
+\subsection*{Uses}
+None
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+None
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+isCollided & $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$ & $\mathbb{B}$ & \\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+None
+\subsubsection*{State Invariant}
+None
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent isCollided ($x_1, x_2, y_1, y_2$):
+\begin{itemize}
+\item transition: none
+\item output: $distance(x_1, x_2, y_1, y_2) \leq 27$
+\item exception: exc := none
+\end{itemize}
+
+\subsection*{Local Function}
+distance: [$\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$] $\Rightarrow$ $\mathbb{R}$\\
+distance($x_1, x_2, y_1, y_2$) $\equiv$ $\sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2}$
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%MonsterMatrix%%%%%%%%%%%%%%%%%%%%%
+\section{MonsterMatrix Module}
+
+\subsection*{Template Module}
+MonsterMatrix
+
+\subsection*{Uses}
+Monster, Ammo, Heart, Bomb
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+MonsterMatrix = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new MonsterMatrix & $\mathbb{N}$, $\mathbb{R}$ & MonsterMatrix & IllegalArgumentException\\
+\hline
+getMatrix && seq of seq [Monster, Ammo, Heart, Bomb] &\\
+\hline
+move &&&\\
+\hline
+shoot &&&\\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+$\mathit{speed}$: $\mathbb{R}$\\
+$\mathit{M}$: $seq\ of\ seq[Ammo\ Monster\ Heart\ Bomb]$\\
+\subsubsection*{State Invariant}
+None
+\subsubsection*{Assumptions}
+None
+\newpage
+\subsubsection*{Access Routine Semantics}
+\noindent new MonsterMatrix($\mathit{round}, \mathit{s}$):
+\begin{itemize}
+\item transition: \\$\mathit{speed} := s$\\
+$\mathit{round} = 1 \Rightarrow M := m1(with\ monsters\ randomly\ replaced\ by\ Ammo,\ Bomb,\ Heart)$\\
+$\mathit{round} = 2 \Rightarrow M := m2(with\ monsters\ randomly\ replaced\ by\ Ammo,\ Bomb,\ Heart)$\\
+$\mathit{round} = 3 \Rightarrow M := m3(with\ monsters\ randomly\ replaced\ by\ Ammo,\ Bomb,\ Heart)$\\
+$\mathit{round} = 4 \Rightarrow M := m4(with\ monsters\ randomly\ replaced\ by\ Ammo,\ Bomb,\ Heart)$\\
+$\mathit{round} = 5 \Rightarrow M := m5(with\ monsters\ randomly\ replaced\ by\ Ammo,\ Bomb,\ Heart)$
+\item output: $out := \mathit{self}$
+\item exception: exc := $(\lnot (0 \leq \mathit{round} \leq 5) \vee (\mathit{s} < 0)) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent getMatrix():
+\begin{itemize}
+\item transition: none
+\item output: $out := M$
+\item exception: none
+\end{itemize}
+
+\noindent move():
+\begin{itemize}
+\item transition: Monster Matrix moves in direction east $\rightarrow$ south $\rightarrow$ west
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent shoot():
+\begin{itemize}
+\item transition: Monsters in the first row of $M$ shoot bullets 
+randomly.
+\item output: none
+\item exception: none
+\end{itemize}
+
+\subsection*{Local Types}
+m1 $\equiv$ 
+$
+\begin{bmatrix}
+GM & GM & GM & GM & GM & GM & GM & GM & GM & GM \\
+GM & GM & GM & GM & GM & GM & GM & GM & GM & GM \\
+GM & GM & GM & GM & GM & GM & GM & GM & GM & GM \\
+GM & GM & GM & GM & GM & GM & GM & GM & GM & GM \\
+GM & GM & GM & GM & GM & GM & GM & GM & GM & GM 
+\end{bmatrix}
+$
+
+\vspace{1cm}
+\noindent 
+m2 $\equiv$ 
+$
+\begin{bmatrix}
+BM & BM & BM & BM & BM & BM & BM & BM & BM & BM \\
+BM & BM & BM & BM & BM & BM & BM & BM & BM & BM \\
+GM & GM & GM & GM & GM & GM & GM & GM & GM & GM \\
+GM & GM & GM & GM & GM & GM & GM & GM & GM & GM \\
+GM & GM & GM & GM & GM & GM & GM & GM & GM & GM 
+\end{bmatrix}
+$
+
+\vspace{1cm}
+\noindent 
+m3 $\equiv$ 
+$
+\begin{bmatrix}
+BM & BM & BM & BM & BM & BM & BM & BM & BM & BM \\
+BM & BM & BM & BM & BM & BM & BM & BM & BM & BM \\
+BM & BM & BM & BM & BM & BM & BM & BM & BM & BM \\
+BM & BM & BM & BM & BM & BM & BM & BM & BM & BM \\
+BM & BM & BM & BM & BM & BM & BM & BM & BM & BM 
+\end{bmatrix}
+$
+
+\vspace{1cm}
+\noindent 
+m4 $\equiv$ 
+$
+\begin{bmatrix}
+PM & PM & PM & PM & PM & PM & PM & PM & PM & PM \\
+BM & BM & BM & BM & BM & BM & BM & BM & BM & BM \\
+BM & BM & BM & BM & BM & BM & BM & BM & BM & BM \\
+BM & BM & BM & BM & BM & BM & BM & BM & BM & BM \\
+GM & GM & GM & GM & GM & GM & GM & GM & GM & GM 
+\end{bmatrix}
+$
+
+\vspace{1cm}
+\noindent 
+m5 $\equiv$ 
+$
+\begin{bmatrix}
+PM & PM & PM & PM & PM & PM & PM & PM & PM & PM \\
+PM & PM & PM & PM & PM & PM & PM & PM & PM & PM \\
+PM & PM & PM & PM & PM & PM & PM & PM & PM & PM \\
+PM & PM & PM & PM & PM & PM & PM & PM & PM & PM \\
+PM & PM & PM & PM & PM & PM & PM & PM & PM & PM 
+\end{bmatrix}
+$
+\\
+
+\noindent GM means green monster.\\ BM means blue monster.\\ PM means pink monster.
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%% MonsterDisplay %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{MonsterDisplay Module}
+
+\subsection*{UserInterface Module}
+MonsterDisplay
+\subsection*{Uses}
+Monster, MonsterColor
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+N/A
+\subsubsection*{Exported Types}
+MonsterDisplay = ?
+
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | l |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new MonsterDisplay&pygame window object, MonsterColor&     MonsterDisplay  & \\
+\hline
+show       &	$\mathbb{N}$,	$\mathbb{N}$, Boolean      &           &          \\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{Environment Variables}
+screen: It is the game screen that is manipulated by the following functions to alter display. This is update by a precise frame rate to depict various game objects on the game screen.
+
+\subsubsection*{State Variables}
+$SCREEN: pygame\ window\ object$\\
+$img: \text{Monster Picture}$
+\subsubsection*{State Invariant}
+N/A
+\subsubsection*{Assumptions}
+N/A
+\subsubsection*{Access Routine Semantics}
+
+new MonsterDisplay($screen, monster\_color$)
+\begin{itemize}
+    \item transition: \\$SCREEN := screen$
+    \\$monster\_color = MonsterColor.GREEN \Rightarrow img := \text{green monster picture}$
+    \\$monster\_color = MonsterColor.BLUE \Rightarrow img := \text{blue monster picture}$
+    \\$monster\_color = MonsterColor.PINK \Rightarrow img := \text{pink monster picture}$
+    \item output: $out := \mathit{self}$
+    \item exception: None
+\end{itemize}
+
+\noindent show($x, y, isDead$):
+\begin{itemize}
+    \item transition:
+    $isDead \Rightarrow Display\ img\ at\ (x, y)$
+    \item output: none
+    \item input definitions: $x$ and $y$ represent the monster display coordinate. $isDead$ is used to clarify whether the monster is killed.
+    \item exception: None
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%SpaceShipDisplay%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{SpaceShipDisplay Module}
+
+\subsection*{UserInterface Module}
+SpaceShipDisplay
+\subsection*{Uses}
+SpaceShip
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+N/A
+\subsubsection*{Exported Types}
+SpaceShipDisplay = ?
+
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | l |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new SpaceShipDisplay       &pygame window object, $\mathbb{N}$     &     SpaceShipDisplay      &           \\
+\hline
+show       &	$\mathbb{N}$,	$\mathbb{N}$     &           &          \\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{Environment Variables}
+screen: It is the game screen that is manipulated by the following functions to alter display. This is update by a precise frame rate to depict various game objects on the game screen.
+\subsubsection*{State Variables}
+N/A
+\subsubsection*{State Invariant}
+$SCREEN: pygame\ window\ object$\\
+$img: \text{SpaceShip Picture}$
+\subsubsection*{Assumptions}
+N/A
+\subsubsection*{Access Routine Semantics}
+
+new SpaceShipDisplay($screen, spaceship\_number$)
+\begin{itemize}
+    \item transition: \\$SCREEN := screen$
+    \\$space\_number = 1 \Rightarrow img := \text{spaceship1 picture}$
+    \\$space\_number = 2 \Rightarrow img := \text{spaceship2 picture}$
+    \item output: $out := self$
+    \item exception: None
+\end{itemize}
+
+\noindent show($x, y$):
+\begin{itemize}
+    \item transition: Display $img$ at $(x, y)$
+    \item input definitions: $x$ and $y$ represent the spaceship display coordinate.
+     \item output: $out := self$
+    \item exception: None
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%BulletDisplay%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{BulletDisplay Module}
+
+\subsection*{UserInterface Module}
+BulletDisplay
+\subsection*{Uses}
+BulletState, Bullet
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+N/A
+\subsubsection*{Exported Types}
+BulletDisplay = ?
+
+\subsubsection*{Exported Access Programs}
+
+\begin{tabular}{| l | l | l | l |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new BulletDisplay       &pygame window object&     BulletDisplay        &           \\
+\hline
+show       &	$\mathbb{N}$, $\mathbb{N}$, $BulletState$     &           &          \\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{Environment Variables}
+screen: It is the game screen that is manipulated by the following functions to alter display. This is update by a precise frame rate to depict various game objects on the game screen.
+\subsubsection*{State Variables}
+$SCREEN: pygame\ window\ object$\\
+$img: \text{Bullet Picture}$
+\subsubsection*{State Invariant}
+N/A
+\subsubsection*{Assumptions}
+N/A
+\subsubsection*{Access Routine Semantics}
+
+new BulletDisplay($screen$)
+\begin{itemize}
+     \item transition: \\$SCREEN := screen$
+    \\$img := \text{bullet picture}$
+    \item output: $out := self$
+    \item exception: None
+\end{itemize}
+
+\noindent show($x, y, state$):
+\begin{itemize}
+    \item transition: $state = BulletState.FIRE \Rightarrow \text{Display}\ img\ at\ (x, y)$
+    \item input definitions: $x$ and $y$ represent the bullet's original coordinate and it will increase if the bullet state is FIRE.
+     \item output: none
+    \item exception: None
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%ScoreDisplay%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{ScoreDisplay Module}
+
+\subsection*{UserInterface Module}
+ScoreDisplay
+\subsection*{Uses}
+Score
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+N/A
+\subsubsection*{Exported Types}
+ScoreDisplay = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | l |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new ScoreDisplay       &pygame window object&     ScoreDisplay        &           \\
+\hline
+show       &	$\mathbb{N}$, $\mathbb{N}$, $\mathbb{N}$     &           &          \\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{Environment Variables}
+screen: It is the game screen that is manipulated by the following functions to alter display. This is update by a precise frame rate to depict various game objects on the game screen.
+
+\subsubsection*{State Variables}
+$SCREEN: pygame\ window\ object$
+\subsubsection*{State Invariant}
+N/A
+\subsubsection*{Assumptions}
+N/A
+\subsubsection*{Access Routine Semantics}
+
+new ScoreDisplay($screen$)
+\begin{itemize}
+    \item transition: $SCREEN := screen$
+    \item output: $out := self$
+    \item exception: None
+\end{itemize}
+
+\noindent show($x, y, score$):
+\begin{itemize}
+    \item transition: Display $score$ at $(x, y)$.
+    \item input definitions: $x$ and $y$ represent the score's coordinate. $score$ represent the total scores of player(s).
+    \item output: none
+    \item exception: None
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%ObstacleDisplay%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{ObstaclesDisplay Module}
+
+\subsection*{UserInterface Module}
+ObstaclesDisplay
+
+\subsection*{Uses}
+Obstacle
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+N/A
+\subsubsection*{Exported Types}
+ObstaclesDisplay = ?
+
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | l |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new ObstaclesDisplay       &pygame window object&     ObstaclesDisplay        &           \\
+\hline
+show       &	$\mathbb{N}$, $\mathbb{N}$, $\mathbb{B}$     &           &          \\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{Environment Variables}
+screen: It is the game screen that is manipulated by the following functions to alter display. This is update by a precise frame rate to depict various game objects on the game screen.
+\subsubsection*{State Variables}
+$SCREEN: pygame\ window\ object$\\
+$img: \text{Obstacle Picture}$
+\subsubsection*{State Invariant}
+N/A
+\subsubsection*{Assumptions}
+N/A
+\subsubsection*{Access Routine Semantics}
+
+new ObstaclesDisplay($screen$)
+\begin{itemize}
+    \item transition: \\
+    $SCREEN := screen$\\
+    $img := \text{Obstacle Picture}$
+    \item output: $out := self$
+    \item exception: None
+\end{itemize}
+
+\noindent show($x, y, isDestroy$):
+\begin{itemize}
+    \item transition: $\lnot isDestroy \Rightarrow Display\ img\ at\ (x, y)$
+    \item input definitions: $x$ and $y$ represent the obstacles' coordinate. $isDestroy$ represent the state of obstacles, 'True' if the obstacles are destroy otherwise 'False'.
+    \item output: none
+    \item exception: None
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%Ammo Display%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{AmmoDisplay Module}
+
+\subsection*{UserInterface Module}
+AmmoDisplay
+
+\subsection*{Uses}
+Ammo
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+N/A
+\subsubsection*{Exported Types}
+AmmoDisplay = ?
+\subsubsection*{Exported Access Programs}
+
+\begin{tabular}{| l | l | l | l |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new AmmoDisplay       &pygame window object&     AmmoDisplay        &           \\
+\hline
+show       &	 $\mathbb{N}$, $\mathbb{N}$, $\mathbb{B}$    &           &          \\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{Environment Variables}
+screen: It is the game screen that is manipulated by the following functions to alter display. This is update by a precise frame rate to depict various game objects on the game screen.
+\subsubsection*{State Variables}
+$SCREEN : \text{pygame window object}$\\
+$img : \text{Picture of Ammo}$
+\subsubsection*{State Invariant}
+N/A
+\subsubsection*{Assumptions}
+N/A
+\subsubsection*{Access Routine Semantics}
+
+new AmmoDisplay($screen$)
+\begin{itemize}
+    \item transition:\\
+    $SCRREN := screen$\\
+    $img := Ammo\ Picture$
+    \item output: $out := self$
+    \item exception: None
+\end{itemize}
+
+\noindent show(x, y, isShot):
+\begin{itemize}
+    \item transition: $\lnot isShot \Rightarrow Display\ img\ at\ (x, y)$
+    \item input definitions: x, y represent the coordinate of ammo picture
+    to be displayed. $isShot$ represents the state of ammo, it is True if the ammo is shoot.
+    \item output: none
+    \item exception: None
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%Heart Display%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{HeartDisplay Module}
+
+\subsection*{UserInterface Module}
+HeartDisplay
+
+\subsection*{Uses}
+Heart
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+N/A
+\subsubsection*{Exported Types}
+HeartDisplay = ?
+\subsubsection*{Exported Access Programs}
+
+\begin{tabular}{| l | l | l | l |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new HeartDisplay       &pygame window object&     HeartDisplay        &           \\
+\hline
+show       &	 $\mathbb{N}$, $\mathbb{N}$, $\mathbb{B}$    &           &          \\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{Environment Variables}
+screen: It is the game screen that is manipulated by the following functions to alter display. This is update by a precise frame rate to depict various game objects on the game screen.
+\subsubsection*{State Variables}
+$SCREEN : \text{pygame window object}$\\
+$img : \text{Picture of Heart}$
+\subsubsection*{State Invariant}
+N/A
+\subsubsection*{Assumptions}
+N/A
+\subsubsection*{Access Routine Semantics}
+
+new HeartDisplay($screen$)
+\begin{itemize}
+    \item transition:\\
+    $SCRREN := screen$\\
+    $img := Heart\ Picture$
+    \item output: $out := self$
+    \item exception: None
+\end{itemize}
+
+\noindent show(x, y, isShot):
+\begin{itemize}
+    \item transition: $\lnot isShot \Rightarrow Display\ img\ at\ (x, y)$
+    \item input definitions: x, y represent the coordinate of Heart
+    picture to be displayed. $isShot$ represents the state of Heart, it is True if the Heart is shoot.
+    \item output: none
+    \item exception: None
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%Bomb%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{BombDisplay Module}
+
+\subsection*{UserInterface Module}
+BombDisplay
+
+\subsection*{Uses}
+Bomb
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+N/A
+\subsubsection*{Exported Types}
+BombDisplay = ?
+\subsubsection*{Exported Access Programs}
+
+\begin{tabular}{| l | l | l | l |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new BombDisplay       &pygame window object&     BombDisplay        &           \\
+\hline
+show       &	 $\mathbb{N}$, $\mathbb{N}$, $\mathbb{B}$    &           &          \\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{Environment Variables}
+screen: It is the game screen that is manipulated by the following functions to alter display. This is update by a precise frame rate to depict various game objects on the game screen.
+\subsubsection*{State Variables}
+$SCREEN : \text{pygame window object}$\\
+$img : \text{Picture of Bomb}$
+\subsubsection*{State Invariant}
+N/A
+\subsubsection*{Assumptions}
+N/A
+\subsubsection*{Access Routine Semantics}
+
+new BombDisplay($screen$)
+\begin{itemize}
+    \item transition:\\
+    $SCRREN := screen$\\
+    $img := Bomb\ Picture$
+    \item output: $out := self$
+    \item exception: None
+\end{itemize}
+
+\noindent show(x, y, isShot):
+\begin{itemize}
+    \item transition: $\lnot isShot \Rightarrow Display\ img\ at\ (x, y)$
+    \item input definitions: x, y represent the coordinate of Bomb
+    picture
+     to be displayed. $isShot$ represents the state of Bomb, it is True if the Bomb is shoot.
+    \item output: none
+    \item exception: None
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%MonsterMatrixDisplay%%%%%%%%%%%%%%%%%%%
+\section{MonsterMatrixDisplay Module}
+
+\subsection*{UserInterface Module}
+MonsterMatrixDisplay
+
+\subsection*{Uses}
+BombDisplay, MonsterDisplay, AmmoDisplay, HeartDisplay, MonsterMatrix
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+N/A
+\subsubsection*{Exported Types}
+MonsterMatrixDisplay = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | l |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new MonsterMatrixDisplay&pygame window object &MonsterMatrixDisplay&\\
+\hline
+show       &	 $MonsterMatrix$  &           &          \\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{Environment Variables}
+screen: It is the game screen that is manipulated by the following functions to alter display. This is update by a precise frame rate to depict various game objects on the game screen.
+\subsubsection*{State Variables}
+$SCREEN : \text{pygame window object}$
+\subsubsection*{State Invariant}
+N/A
+\subsubsection*{Assumptions}
+N/A
+\subsubsection*{Access Routine Semantics}
+new MonsterMatrixDisplay($screen$)
+\begin{itemize}
+    \item transition: $SCREEN := screen$ 
+    \item output: $out := self$
+    \item exception: None
+\end{itemize}
+
+\noindent show($M$):
+\begin{itemize}
+    \item transition: $\forall object \in M\ |\ object.show(x,\ y,\ isDead/isShot)$\\
+    $M$ here could be $Monster\ Ammo\ Heart\ Bomb$
+    \item output: none
+    \item exception: None
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%SetUpDisplay%%%%%%%%%%%%%%%%%%%%%
+\section{SetUpDisplay Module}
+
+\subsection*{UserInterface Module}
+SetUpDisplay
+\subsection*{Uses}
+None
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+N/A
+\subsubsection*{Exported Types}
+SetUpDisplay = ?
+
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | l |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new SetUpDisplay       &      screen     &     SetUpDisplay        &           \\
+\hline
+show       &	   &           &          \\
+\hline
+getScreen      &	   &pygame window  object&          \\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{Environment Variables}
+screen: It is the game screen that is manipulated by the following functions to alter display. This is update by a precise frame rate to depict various game objects on the game screen.
+
+\subsubsection*{State Variables}
+$SCREEN : \text{pygame window object}$
+\subsubsection*{State Invariant}
+N/A
+\subsubsection*{Assumptions}
+N/A
+\subsubsection*{Access Routine Semantics}
+
+new SetUpDisplay()
+\begin{itemize}
+    \item transition: $SCREEN := new\ pygame\ window\ object$
+    \item output: $out := self$
+    \item exception: None
+\end{itemize}
+
+\noindent show():
+\begin{itemize}
+    \item transition: Display The following contents
+    \begin{itemize}
+    \item Welcoming message
+    \item Display game mode selection
+    \item Game instruction
+    \item Prevent game addiction message
+    \end{itemize}
+    \item output: none
+    \item exception: None
+\end{itemize}
+
+\noindent getScreen()
+\begin{itemize}
+\item transition: none
+\item output: $out := SCREEN$
+\item exception: none
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%SingleController%%%%%%%%%%%%%%%%%%%%
+\section{SingleController Module}
+
+\subsection*{Template Module}
+SingleController
+
+\subsection*{Uses}
+BulletDisplay, MonsterMatrixDisplay, SpaceShipDisplay, ScoreDisplay,
+ObstaclesDisplay
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+SingleController = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new SingleController &  & SingleController & \\
+\hline
+run & Keyboard Inputs &  & \\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+All the model objects and corresponding display objects.
+\subsubsection*{State Invariant}
+None
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent new SingleController():
+\begin{itemize}
+\item transition: Create the model objects and corresponding display objects.
+\item output: $out := \mathit{self}$
+\item exception: None
+\end{itemize}
+
+\noindent run()
+\begin{itemize}
+\item transition: The controller should do the following things:
+\begin{itemize}
+\item Let player move space by pressing $\leftarrow$ and $\rightarrow$.
+\item Let player shoot bullet by pressing \verb|SPACE|.
+\item If any monster is dead or any game item is shot, let them disappear from the game window. 
+\item If any monsters are shot, increase the score.
+\item If any game items are shot, do corresponding operations. 
+\item If a round is finished, go to the next round.
+\item If the spaceship is shot, decrease spaceship lives.
+\item If the obstacle is shot, decrease obstacle areas.
+\end{itemize}
+\item output: none
+\item exception: none
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%DoubleContoller%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{DoubleController Module}
+
+\subsection*{Template Module}
+DoubleController
+
+\subsection*{Uses}
+BulletDisplay, MonsterMatrixDisplay, SpaceShipDisplay, ScoreDisplay,
+ObstaclesDisplay
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+DoubleController = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new DoubleController &  & DoubleController & \\
+\hline
+run & Keyboard Inputs &  & \\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+All the model objects and corresponding display objects.
+\subsubsection*{State Invariant}
+None
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent new DoubleController():
+\begin{itemize}
+\item transition: Create the model objects and corresponding display objects.
+\item output: $out := \mathit{self}$
+\item exception: None
+\end{itemize}
+
+\noindent run()
+\begin{itemize}
+\item transition: The controller should do the following things:
+\begin{itemize}
+\item Let player1 move space by pressing $\leftarrow$ and $\rightarrow$.
+\item Let player1 shoot bullet by pressing \verb|SPACE|.
+\item Let player2 move space by pressing \verb|A| and \verb|D|.
+\item Let player2 shoot bullet by pressing \verb|S|.
+\item If any monster is dead or any game item is shot, let them disappear from the game window. 
+\item If any monsters are shot, increase the score.
+\item If any game items are shot, do corresponding operations. 
+\item If a round is finished, go to the next round.
+\item If the spaceship is shot, decrease spaceship lives.
+\item If the obstacle is shot, decrease obstacle areas.
+\end{itemize}
+\item output: none
+\item exception: none
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%TotalController%%%%%%%%%%%%%%%%%
+\section{TotalController Module}
+
+\subsection*{Template Module}
+TotalController
+
+\subsection*{Uses}
+SetUpDisplay
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+TotalController = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new TotalController &  & TotalController & \\
+\hline
+run & Keyboard Input &  & \\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+$s : \text{SetUpDisplay}$
+\subsubsection*{State Invariant}
+None
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent new DoubleController():
+\begin{itemize}
+\item transition: $s := new SetUpDisplay()$
+\item output: $out := \mathit{self}$
+\item exception: None
+\end{itemize}
+
+\noindent run()
+\begin{itemize}
+\item transition:\\
+$s.run()$\\
+If user chooses single player model $\Rightarrow$ Invoke SingleController\\
+If user chooses double player model $\Rightarrow$ Invoke DoubleController\\
+\item output: none
+\item exception: none
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Diver%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Driver Module}
+
+\subsection*{Template Module}
+Driver
+
+\subsection*{Uses}
+TotalController
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+Driver = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new Driver &  & Driver & \\
+\hline
+run & &  & \\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+$t : \text{TotalController}$
+\subsubsection*{State Invariant}
+None
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent new Driver():
+\begin{itemize}
+\item transition: $t := new\ TotalController()$
+\item output: $out := \mathit{self}$
+\item exception: None
+\end{itemize}
+
+\noindent run()
+\begin{itemize}
+\item transition: $t.run()$
+\item output: none
+\item exception: none
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end {document}

@@ -1,0 +1,291 @@
+
+\documentclass[12pt]{article}
+
+
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{paralist}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{color}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{multirow}
+\usepackage{soul}
+\geometry{margin = 0.75in}
+
+\title{SE 3XA3: Development Plan}
+
+\begin{document}
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%Team Information%%%%%%%%%%%%%%%%%%%%%%
+{\Large Team Information:}
+\begin{table}[htp]
+\centering
+{\Large
+\begin{tabular}{|c|c|c|}
+\hline
+\multicolumn{1}{|l|}{Team Number} & Name         & MACID   \\ \hline
+\multirow{3}{*}{L03 G07}          & Qianlin Chen & chenq84 \\ \cline{2-3} 
+                                  & Jiacheng Wu  & wuj187  \\ \cline{2-3} 
+                                  & Tingyu Shi   & shit19  \\ \hline
+\end{tabular}
+}
+\end{table}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{table}[htp]
+\caption{Revision History} 
+\begin{tabularx}{\textwidth}{llX}
+\toprule
+\textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
+\midrule
+January 31, 2022 & All team members & Create Outline\\
+February 3, 2022 & All team members & Write contents\\
+April 8, 2022 & All team members & \textcolor{red}{Revise Document}\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\newpage
+
+\section{Introduction}
+\noindent This document is about the
+development plan of space invaders project
+based at the original project at the
+following link:\\
+\url{https://github.com/leerob/space-invaders}
+\section{Team Information}
+{\Large Team Information:}
+\begin{table}[htp]
+\centering
+{\Large
+\begin{tabular}{|c|c|c|}
+\hline
+\multicolumn{1}{|l|}{Team Number} & Name         & MACID   \\ \hline
+\multirow{3}{*}{L03 G07}          & Qianlin Chen & chenq84 \\ \cline{2-3} 
+                                  & Jiacheng Wu  & wuj187  \\ \cline{2-3} 
+                                  & Tingyu Shi   & shit19  \\ \hline
+\end{tabular}
+}
+\end{table}
+\section{Team Meeting Plan}
+\subsection{Time, Location, Frequency and Contents of Meetings}
+Meetings will take place every Monday and Wednesday from 9:30 am to 11:20 am. All the meetings will be on the Microsoft teams
+before February 7. We created the Microsoft Team
+channel "3XA3 Lab03" and we will work at the group 7 in this channel. After
+February 7, our team 
+will hold
+in person meetings.
+If regular meetings are
+not enough, we will hold extra meetings
+according to team members' available time.
+
+\noindent The contents of the meetings
+include discussion, implementation,
+assigning works outside the meetings and
+reporting the working progress. All the
+decisions and modifications should be
+recorded and updated by the end of the day
+of meetings. 
+\subsection{Member Roles for Meetings}
+The following are member 
+roles for meetings:
+\begin{itemize}
+\item Tingyu Shi is the chair of the
+meetings. He will host all the
+meetings and gather participants' ideas.
+\item Jiacheng Wu will be the recorder of the
+meeting. He will record all the decisions
+and changes to the project or documents.
+\item Qianlin Chen will assign all the tasks
+after the meetings to all the team members.
+\end{itemize}
+\subsection{Rules for Agendas}
+\noindent An agenda is supposed to be made before every meeting. The following
+are rules for agendas of meetings:
+\begin{itemize}
+\item All team members are supposed to attend the meetings. If any member cannot attend the meeting, he/she needs to tell the other teammates at least one day before the meeting.
+\item Topics must be determined before every meeting.
+\item The length of meeting time shall be determined before the meeting.
+\item There is only one chair/leader in the meeting.
+\item Conflicts in the meeting shall be recorded and solved before the next meeting.
+\item All members should communicate respectfully during the meeting.
+\item All members shall be assigned a “take home” work after the meeting. The estimated time of the work of each member shall be close.
+\item First topic will be reviewing the agenda.
+\item Assess all team members’ contributions in every meetings.
+\end{itemize}
+\section{Team Communication Plan}
+Our team will use Microsoft Team and
+Facebook for communication. Microsoft Team
+will be used for big tasks like
+meetings, implementation and distributing
+tasks. Facebook will be used for small problems like
+debugging, advising and small modifications.
+Also, the team will contact with TAs and
+professor via Microsoft Team or Email. GitLab is also
+used to do the project. All members should write detailed commit messages so that
+others can understand the modifications.
+
+
+\section{Team Member Roles}
+Each member in the team will have multiple roles since the team is small. Tingyu Shi will be the leader of our team. Tingyu Shi will decide all the decisions and modifications for this project. Also, he will gather all the modifications using git. Qianlin Chen will be the lead designer of the project. Jiacheng Wu is in charge of UI of the game. All of the member will be involved in Development, testing, Documentation. 
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|}
+    \hline
+         Member Names & Roles/Expert  \\
+         \hline
+         Tingyu Shi & \shortstack{ Team Leader, Project Manager, Meeting host \\ Developer, Documentation }\\
+         \hline
+         Qianlin Chen & \shortstack{ Lead designer, Tester, Developer, \\ Documentation}\\
+         \hline
+         Jiacheng Wu & \shortstack{UI designer, Tester, Developer, \\ Documentation} \\
+         \hline
+    \end{tabular}
+    %\caption{Caption}
+    \label{tab:label1}
+\end{table}
+
+\section{Git Workflow Plan}
+The git workflow we decided to use is Feature-Branch Workflow. The following are
+some details of how it will work:
+\begin{itemize}
+\item The whole project has a mean branch. 
+You can view this branch as the official 
+branch for this project. Main branch should
+not contain broken code. The code can only
+be merged to main branch after testing.
+\item For each new feature, a new branch 
+should be created. For example, for our space invaders project, we can have one 
+branch for space ship to move and one
+branch for space ship to catch additional
+game items.
+\item After each feature is tested, team 
+members can merge them to the main branch.
+\end{itemize}
+The main advantage for this workflow is that 
+main branch will not contain any broken code.\\
+Labels will be used to indicate issues.\\
+Milestones will be used to track progress,
+for example, team members can track if 
+indicated issues are resolved.
+\section{Proof of Concept Demonstration Plan}
+\subsection{Some Significant Risks}
+\subsubsection{Implementation Difficulties}
+This game will be implemented with python.
+The good news is that every team member has
+experience with this language. However, we need to use pygame module for implementation and only one team member has experience with this module. Therefore, other two team members should spend time to learn this module and familiarize with the API.
+\subsubsection{Testing}
+Game testing is usually harder compared with
+testing of other projects. The main difficulty here is to choose an appropriate
+testing method so that it can cover all the scenarios.
+\subsubsection{Library Installation}
+Library installation is not a problem in this project.
+All users can use pip to install pygame library easily.
+\subsubsection{Portability}
+We believe that source code can be executed
+in different operating systems. However, the
+problem is to make sure that executable files
+can be executed in different operating systems.
+\subsubsection{Design and Requirements Difficulties}
+\begin{itemize}
+\item Design Difficulty: The main difficulty in design process is designing appropriate modules. We need to make sure 
+that each module is low coupling and high cohesion.
+\item Requirements Difficulty: The main difficulty for requirements engineering is 
+to solve conflicts and make sure the final
+requirements document does not have any conflicts. 
+\end{itemize}
+\subsection{Plans to Overcome Risks}
+\subsubsection{Implementation}
+Make sure team members who are not familiar 
+with pygame go through YouTube tutorials
+before implementation process.
+\subsubsection{Testing}
+Unit testing will be critical for this project, before merging new features to the 
+main branch, make sure they are well tested.\textcolor{red}{Unit testing will be 
+used to test game models}\\
+Before doing the final test for the whole
+project, team members should first document
+possible scenarios and make sure all the 
+scenarios can be tested.\\
+We can also invite some friends to play 
+this game without showing them source code.
+This is the same as black-box testing. 
+\subsubsection{Portability}
+\textcolor{red}{\st{Team members will generate different executable
+files for different operating systems and run these files in different operating systems.} Our team will provide instructions for users to play the game by 
+executing command in terminal on different platforms.}
+\subsubsection{Design and Requirements}
+\begin{itemize}
+\item Some of the design problems can only
+be found when we are coding. Therefore, 
+we need to review and revise design document regularly while implementing.
+\item After finishing the requirement documents, we
+will hold a meeting to do inspection to review them. 
+\end{itemize}
+\section{Technology}
+The following are some technology details 
+for this project:
+\begin{itemize}
+\item Programming language: Python
+\item IDE: Each team member can use different IDEs according to their preferences. VSCode is recommended.
+\item Testing Framework: Pytest will be 
+used for testing.
+\item Documentation: All documents should
+be written using \LaTeX. Doxygen will be 
+used to document code. 
+\end{itemize}
+\section{Coding style}
+The project’s coding structure follows Python3, so we decide to use the linting standards set by VSCode in order to detect bugs and style problems in Python source code. Because of the dynamic nature of Python, some warnings may be incorrect. However, spurious warnings should be fairly infrequent. 
+
+\noindent Moreover, we will obey the all Python Style Rules listed in the \url{https://google.github.io/styleguide/pyguide.html} (simply like the limitation of line length and comments’ rules).
+
+\section{Project schedule}
+Gantt\_Chart\_L03\_G07.gan file can be found at the following:\\ 
+\href{https://gitlab.cas.mcmaster.ca/shit19/2022_winter_3xa3_l03_g07/-/blob/main/ProjectSchedule/Gantt_Chart_L03_G07.gan}{\textcolor{red}{.gan file Link}}\\
+
+\noindent Gantt\_Chart\_L03\_G07.pdf file can be found at the following:\\ \href{https://gitlab.cas.mcmaster.ca/shit19/2022_winter_3xa3_l03_g07/-/blob/main/ProjectSchedule/Gantt_Chart_L03_G07.pdf}{\textcolor{red}{.pdf file Link}}\\
+
+\noindent The above two files can be found at 
+the folder called "Gantt\_Chart\_Files", which
+is located at the DevelopmentPlan folder.\\
+For some future documents, subtasks are not 
+specified since we do not know the template 
+right now. Gantt Chart will be updated in the 
+future.  
+\section{Project review}
+\textcolor{red}{For this project, our group has re-implemented the original project
+called Space Invaders. We all most finished what we planned, the following is a 
+conclusion of what we have finished:
+\begin{itemize}
+\item Apply software engineering principles to this project, including proper 
+documentation, modularity.etc.
+\item Upgrade the graphics
+\item Add double player mode
+\item Add three game items
+\end{itemize}
+However, there are some features that we do not finish due to many reasons like 
+time constraint and some requirements are just impossible to finish.\\ One thing
+that we learned from this project is the importance of time management. Usually, 
+team members like to leave the work to the last day and as a result, we do not have
+a lot of time to revise the work. Therefore, sometimes work quality can not be
+guaranteed.\\ About the teamwork, all the team members can work with each other 
+without any problems. All the team members can attend meetings on time and finish
+assigned work on time. As mentioned above, one thing that we need to change is the
+time management.\\Some potential improvements/modifications that we may apply to
+our project:
+\begin{itemize}
+\item Change software architecture  from MVC to PAC. This can improve the maintainability of our project.
+\item Improve visual effects, such as adding animation to the game elements.
+\item Add a feature to record the history scores.
+\end{itemize} 
+}
+\end {document}

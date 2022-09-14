@@ -1,0 +1,2753 @@
+\documentclass[12pt]{article}
+
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{paralist}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{color}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{multirow}
+\usepackage[round]{natbib}
+\usepackage{soul}
+
+\geometry{margin = 0.75in}
+\title{SE 3XA3: MIS\\Space Invaders}
+
+\begin{document}
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%Team Information%%%%%%%%%%%%%%%%%%%%%%
+{\Large Team Information:}
+\begin{table}[htp]
+\centering
+{\Large
+\begin{tabular}{|c|c|c|}
+\hline
+\multicolumn{1}{|l|}{Team Number} & Name         & MACID   \\ \hline
+\multirow{3}{*}{L03 G07}          & Qianlin Chen & chenq84 \\ \cline{2-3} 
+                                  & Jiacheng Wu  & wuj187  \\ \cline{2-3} 
+                                  & Tingyu Shi   & shit19  \\ \hline
+\end{tabular}
+}
+\end{table}
+
+%%%%%%%%%%% Revision History%%%%%%%%%%%%%
+\newpage
+\begin{table}[htp]
+\caption{Revision History} 
+\begin{tabularx}{\textwidth}{llX}
+\toprule
+\textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
+\midrule
+January 26, 2022 & All team members & Initial Document\\
+March 18, 2022 & Qianlin Chen & Display Modules\\
+March 10, 2022 & Jiacheng Wu & Control Modules\\
+March 10, 2022 & Tingyu Shi & Model modules\\
+April 11, 2022 & All team members & \textcolor{red}{Revised document}\\
+\bottomrule
+\end{tabularx}
+\end{table}
+\newpage
+%%%%%%%%%%%%%%Contents%%%%%%%%%%%%%%%%
+\tableofcontents
+\listoftables
+\listoffigures
+\cleardoublepage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%MonsterColor%%%%%%%%%%%%%%%%
+\section{MonsterColor Module}
+
+\subsection*{Module}
+MonsterColor
+
+\subsection*{Uses}
+None
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+MonsterType = $\{RED, BLUE, PINK\}$ \# Represent Three colors of monsters
+\subsubsection*{Exported Access Programs}
+None (This is an Enum class in python)
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+None
+\subsubsection*{State Invariant}
+None
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+None
+\subsubsection*{Consideration}
+When implementing in Python, use Enum class.
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%BulletState%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{BulletState Module}
+
+\subsection*{Module}
+BulletState
+
+\subsection*{Uses}
+None
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+BulletState = $\{FIRE, READY\}$ \# Represent two states of bullets
+\subsubsection*{Exported Access Programs}
+None (This is an Enum class in python)
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+None
+\subsubsection*{State Invariant}
+None
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+None
+\subsubsection*{Consideration}
+When implementing in Python, use Enum class.
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%Monster%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Monster Module}
+
+\subsection*{Template Module}
+Monster
+
+\subsection*{Uses}
+MonsterColor, Bullet, \textcolor{red}{pygame.sprite.Sprite}
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+Monster = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new Monster & $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$, $MonsterColor$,  $\mathbb{R}$& Monster & IllegalArgumentException\\
+\hline
+\textcolor{red}{\st{
+setX} Method removed} & $\mathbb{R}$ &  & IllegalArgumentException\\
+\hline
+\textcolor{red}{\st{
+setY } Method removed}& $\mathbb{R}$ &  & IllegalArgumentException\\
+\hline
+\textcolor{red}{\st{
+getX} Method removed} &    & $\mathbb{R}$ & \\
+\hline
+\textcolor{red}{\st{
+getY } Method removed}&    & $\mathbb{R}$ & \\
+\hline
+\textcolor{red}{\st{
+getColor }Method removed}& & $MonsterColor$ &\\
+\hline
+reduceLife & & & \\
+\hline
+isDead & & $\mathbb{B}$ & \\
+\hline
+update & $\mathbb{Z}$ & &\\
+\hline
+\textcolor{red}{\st{
+shoot} Method removed} & & $Bullet$ &\\
+\hline
+getItemType & & $\mathbb{Z}$ &\\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+$\mathit{speed}$: $\mathbb{R}$\\
+\textcolor{red}{\st{$\mathit{X}$: $\mathbb{R}$}}\\
+\textcolor{red}{\st{$\mathit{Y}$: $\mathbb{R}$}}\\
+\textcolor{red}{\st{$\mathit{monster\_color}$: $MonsterColor$}}\\
+\textcolor{red}{\st{$\mathit{X\_change}$: $\mathbb{R}$}}\\
+\textcolor{red}{\st{$\mathit{Y\_change}$: $\mathbb{R}$}}\\
+$\mathit{life}$: $\mathbb{Z}$\\
+$\mathit{itemType}$: $\mathbb{Z}$\\
+%%%%%%%%%%%%%reuse
+$\mathit{image}$: \textit{.png file}\\
+$\mathit{rect}$: \textit{image.get\_rect (This is the API of pygame library)}
+%%%%%%%%%%%%%%%%%%
+
+\subsubsection*{State Invariant}
+\textcolor{red}{\st{$0 \leq X \leq 736$}}
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent new Monster($\mathit{x}, \mathit{y}, \mathit{color}, \mathit{s}, $):
+\begin{itemize}
+\item transition: \\$\mathit{speed}, \mathit{itemType} := \mathit{s}, 1$\\
+  $color = MonsterColor.GREEN \Rightarrow  life := 1$\\
+  $color = MonsterColor.BLUE \Rightarrow  life := 2$\\
+  $color = MonsterColor.PINK \Rightarrow  life := 3$\\
+  $image := \textit{corresponding image}$\\
+  $rect := image.get\_rect(topleft\ =\ (x,\ y))$
+\item output: $out := \mathit{self}$
+\item exception: exc := $((\mathit{s} < 0) \vee (\mathit{x} < 0) \vee 
+  (\mathit{y} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent \textcolor{red}{\st{setX($\mathit{x}$)} Method removed}:
+\begin{itemize}
+\item transition: $X := x$ 
+\item output: none
+\item exception: $((\mathit{x} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent \textcolor{red}{\st{setY($\mathit{y}$)} Method removed}:
+\begin{itemize}
+\item transition: $Y := y$ 
+\item output: none
+\item exception: $((\mathit{y} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent \textcolor{red}{\st{getX()} Method removed}:
+\begin{itemize}
+\item transition: none
+\item output: $out := X$
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{\st{getY()} Method removed}:
+\begin{itemize}
+\item transition: none
+\item output: $out := Y$
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{\st{getColor()} Method removed}:
+\begin{itemize}
+\item transition: none
+\item output: $out := monster\_color$
+\item exception: none
+\end{itemize}
+
+\noindent reduceLife():
+\begin{itemize}
+\item transition: $life := life - 1$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent isDead():
+\begin{itemize}
+\item transition: none
+\item output: $life = 0$
+\item exception: none
+\end{itemize}
+
+\noindent update($direction$):
+\begin{itemize}
+\item transition: \\
+$rect.x := rect.x\ +\ (direction \times speed)$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{\st{shoot()} Method removed}:
+\begin{itemize}
+\item transition: none
+\item output: $new\ Bullet(20,\ X,\ Y)$
+\item exception: none
+\end{itemize}
+
+\noindent getItemType():
+\begin{itemize}
+\item transition: none
+\item output: $itemType$
+\item exception: none
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%SpaceShip%%%%%%%%%%%%%%%%%%%%%%%%
+\section{SpaceShip Module}
+
+\subsection*{Template Module}
+SpaceShip
+
+\subsection*{Uses}
+Bullet, pygame.sprite.Sprite
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+SpaceShip = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new Monster & $\mathbb{R}$, $\mathbb{R}$, ($\mathbb{R}, \mathbb{R}$), $\mathbb{R}$, $\mathbb{Z}$ & SpaceShip & IllegalArgumentException\\
+\hline
+\textcolor{red}{\st{setX} Method removed} & $\mathbb{R}$ &  & IllegalArgumentException\\
+\hline
+\textcolor{red}{\st{setY} Method removed} & $\mathbb{R}$ &  & IllegalArgumentException\\
+\hline
+\textcolor{red}{\st{getX} Method removed} &    & $\mathbb{R}$ & \\
+\hline
+\textcolor{red}{\st{getY} Method removed} &    & $\mathbb{R}$ & \\
+\hline
+\textcolor{red}{\st{moveLeft} Method removed} & & &\\
+\hline
+\textcolor{red}{\st{moveRight} Method removed} & & &\\
+\hline
+\textcolor{red}{\st{stopMove} Method removed} & & &\\
+\hline
+reduceLife & & & \\
+\hline
+\textcolor{red}{\st{isDead} Method removed} & & $\mathbb{B}$ & \\
+\hline
+boundaryDetection & & &\\
+\hline
+shoot & & $Bullet$ &\\
+\hline
+update &&&\\
+\hline
+move &&&\\
+\hline
+prepare\_bullet &&&\\
+\hline
+getBulletsGroup && pygame sprite group &\\
+\hline
+increaseLife &&&\\
+\hline
+getLife &&$\mathbb{Z}$&\\
+\hline
+setLife &$\mathbb{Z}$&&\\
+\hline
+increaseBullet &&&\\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+$\mathit{screen\_size\_info}$: $(\mathbb{R}, \mathbb{R})$\\
+$\mathit{space\_ship\_number}$: $\mathbb{Z}$\\
+$\mathit{speed}$: $\mathbb{R}$\\
+\textcolor{red}{\st{$\mathit{X}$: $\mathbb{R}$}}\\
+\textcolor{red}{\st{$\mathit{Y}$: $\mathbb{R}$}}\\
+\textcolor{red}{\st{$\mathit{X\_change}$: $\mathbb{R}$}}\\
+$\mathit{life}$: $\mathbb{Z}$\\
+$\mathit{image}$: \textit{.png file}\\
+$\mathit{rect}$: \textit{image.get\_rect (This is the API of pygame library)}\\
+bullets\_group: pygame sprite group\\
+state: BulletState\\
+shoot\_time: $\mathbb{Z}$\\
+bullet\_number: $\mathbb{Z}$
+\subsubsection*{State Invariant}
+\textcolor{red}{\st{$0 \leq X \leq 736$}}\\
+$0 \leq life \leq 5$
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent new SpaceShip(x, y, size, s, number):
+\begin{itemize}
+\item transition:
+screen\_size\_info := size\\
+space\_ship\_number := number\\
+$image := \textit{corresponding image}$\\
+  $rect := image.get\_rect(midbottom\ =\ (x,\ y))$\\
+  speed := s\\
+  life := 5\\
+  bullets\_group := new Pygame sprite group\\
+  state := BulletState.READY\\
+  shoot\_time := 0\\
+  bullet\_number := 0
+\item output: $out := \mathit{self}$
+\item exception: exc := $((\mathit{s} < 0) \vee (\mathit{x} < 0) \vee 
+  (\mathit{y} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent \textcolor{red}{\st{setX($\mathit{x}$)}}:
+\begin{itemize}
+\item transition: $X := x$ 
+\item output: none
+\item exception: $((\mathit{x} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent \textcolor{red}{\st{setY($\mathit{y}$)}}:
+\begin{itemize}
+\item transition: $Y := y$ 
+\item output: none
+\item exception: $((\mathit{y} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent \textcolor{red}{\st{getX()}}:
+\begin{itemize}
+\item transition: none
+\item output: $out := X$
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{\st{getY()}}:
+\begin{itemize}
+\item transition: none
+\item output: $out := Y$
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{\st{moveLeft()}}:
+\begin{itemize}
+\item transition: $X\_change := -1 * speed$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{\st{moveRight()}}:
+\begin{itemize}
+\item transition: $X\_change := speed$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{\st{stopMove()}}:
+\begin{itemize}
+\item transition: $X\_change := 0$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent reduceLife():
+\begin{itemize}
+\item transition: $life := life - 1$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{\st{isDead()}}:
+\begin{itemize}
+\item transition: none
+\item output: $life = 0$
+\item exception: none
+\end{itemize}
+
+\noindent boundaryDetection():
+\begin{itemize}
+\item transition: \\
+$rect.left \leq 0 \Rightarrow (rect.left := 0)$\\
+$rect.right \geq screen\_size\_info[0] \Rightarrow (rect.right := screen\_size\_info[0])$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent shoot():
+\begin{itemize}
+\item transition: none
+\item output: add bullet(s) to bullet\_group according to user keyboard input
+\item exception: none
+\end{itemize}
+
+\noindent update():
+\begin{itemize}
+\item transition: \\move()\\boundaryDetection()\\shoot()\\prepare\_bullet()\\bullets\_group.update()
+\item output: none
+\item exception: none
+\end{itemize}
+
+
+\noindent \textcolor{red}{move()}:
+\begin{itemize}
+\item transition: \\
+rect.x += speed if user wants to move right\\
+rect.x -= speed if user wants to move left
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{prepare\_bullet()}:
+\begin{itemize}
+\item transition: set up the gap time  between two shootings
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{getBulletsGroup()}:
+\begin{itemize}
+\item transition: none
+\item output: out := bullets\_group
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{increaseLife()}:
+\begin{itemize}
+\item transition: life := life + 1
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{getLife()}:
+\begin{itemize}
+\item transition: none
+\item output: out := life
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{setLife(newLife)}:
+\begin{itemize}
+\item transition: life := newLife
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{increaseBullet()}:
+\begin{itemize}
+\item transition: none
+\item output: bullet\_number := bullet\_number + 1
+\item exception: none
+\end{itemize}
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Bullet%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Bullet Module}
+
+\subsection*{Template Module}
+Bullet
+
+\subsection*{Uses}
+pygame.sprite.Sprite
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+Bullet = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new Bullet & $\mathbb{R}$, $\mathbb{R}$, ($\mathbb{R}$, $\mathbb{R}$), $\mathbb{R}$, $\mathbb{Z}$  & Bullet & IllegalArgumentException\\
+\hline
+\textcolor{red}{\st{
+setX}Method removed} & $\mathbb{R}$ &  & IllegalArgumentException\\
+\hline
+\textcolor{red}{\st{
+setY}Method removed} & $\mathbb{R}$ &  & IllegalArgumentException\\
+\hline
+\textcolor{red}{\st{
+getX}Method removed} &    & $\mathbb{R}$ & \\
+\hline
+\textcolor{red}{\st{
+getY}Method removed} &    & $\mathbb{R}$ & \\
+\hline
+\textcolor{red}{\st{
+setState}Method removed} & $BulletState$ & &\\
+\hline
+\textcolor{red}{\st{
+getState}Method removed} & & $BulletState$ &\\
+\hline
+move & & &\\
+\hline
+boundaryDetection &&&\\
+\hline
+update &&&\\
+\hline
+
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+screen\_size\_info : ($\mathbb{R}, \mathbb{R}$)\\
+$\mathit{speed}$: $\mathbb{R}$\\
+\textcolor{red}{\st{
+$\mathit{X}$: $\mathbb{R}$}}\\
+\textcolor{red}{\st{
+$\mathit{Y}$: $\mathbb{R}$}}\\
+\textcolor{red}{\st{
+$\mathit{Y\_change}$: $\mathbb{R}$}}\\
+\textcolor{red}{\st{
+$\mathit{state}$: $BulletState$}}\\
+$\mathit{image}$: \textit{.png file}\\
+$\mathit{rect}$: \textit{image.get\_rect (This is the API of pygame library)}
+\subsubsection*{State Invariant}
+none
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent new Bullet($\mathit{x}, \mathit{y}, \mathit{size}$, s, direction):
+\begin{itemize}
+\item transition:\\ screen\_size\_info := size \\ speed := s\\$image := \textit{corresponding image(direction is the condition)}$\\
+ $rect := image.get\_rect(center\ =\ (x,\ y))$
+
+\item output: $out := \mathit{self}$
+\item exception: exc := $((\mathit{s} < 0) \vee (\mathit{x} < 0) \vee 
+  (\mathit{y} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent \textcolor{red}{\st{
+setX($\mathit{x}$)}}:
+\begin{itemize}
+\item transition: $X := x$ 
+\item output: none
+\item exception: $((\mathit{x} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent \textcolor{red}{\st{
+setY($\mathit{y}$)}}:
+\begin{itemize}
+\item transition: $Y := y$ 
+\item output: none
+\item exception: $((\mathit{y} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent  \textcolor{red}{\st{
+getX()}}:
+\begin{itemize}
+\item transition: none
+\item output: $out := X$
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{\st{
+getY()}}:
+\begin{itemize}
+\item transition: none
+\item output: $out := Y$
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{\st{
+setState($\mathit{newState}$)}}:
+\begin{itemize}
+\item transition: $state := newState$ 
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{\st{
+getState()}}:
+\begin{itemize}
+\item transition: none
+\item output: $out := state$
+\item exception: none
+\end{itemize}
+
+\noindent move():
+\begin{itemize}
+\item transition: rect.y := rect.y + speed
+\item output: none
+\item exception: none
+\end{itemize}
+
+
+\noindent boundaryDetection():
+\begin{itemize}
+\item transition: rect.y $\leq$ 30 OR rect.y $\geq$ screen\_size\_info[1] $\Rightarrow$
+kill self object
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent update():
+\begin{itemize}
+\item transition: \\move()\\boundaryDetection()
+\item output: none
+\item exception: none
+\end{itemize}
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Score%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Score Module}
+
+\subsection*{Template Module}
+Score
+
+\subsection*{Uses}
+none
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+Score = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new score &  & Score &\\
+\hline
+getScore &    & $\mathbb{N}$ & \\
+\hline
+\textcolor{red}{\st{
+increaseAmount} increase} & $\mathbb{N}$ & &\\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+$\mathit{score}$: $\mathbb{N}$
+\subsubsection*{State Invariant}
+$score \geq 0$
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent new Score():
+\begin{itemize}
+\item transition: $\mathit{score} := 0$
+\item output: $out := \mathit{self}$
+\item exception: exc := none
+\end{itemize}
+\newpage
+
+\noindent getScore():
+\begin{itemize}
+\item transition: none
+\item output: $out := score$
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{\st{
+increaseAmount} increase}($\mathit{amount}$):
+\begin{itemize}
+\item transition: $score := score + amount$ 
+\item output: none
+\item exception: none
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%Block%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Block Module\textcolor{red}{(newly added module)}}
+
+\subsection*{Template Module}
+Block
+
+\subsection*{Uses}
+pygame.sprite.Sprite
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+Obstacle = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new Block & $\mathbb{R}$, $\mathbb{R}$ & Obstacle &\\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+$\mathit{image}$: \textit{.png file}\\
+$\mathit{rect}$: \textit{image.get\_rect (This is the API of pygame library)}
+\subsubsection*{State Invariant}
+None
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent new Block($\mathit{x}, \mathit{y}$):
+\begin{itemize}
+\item transition:\\
+$image := \textit{corresponding image}$\\
+ $rect := image.get\_rect(topleft\ =\ (x,\ y))$
+\item output: $out := \mathit{self}$
+\item exception: exc := none
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%Obstacle%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Obstacle Module}
+
+\subsection*{Template Module}
+Obstacle
+
+\subsection*{Uses}
+Block, pygame.sprite.Sprite
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+Obstacles = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new Obstacle & & Obstacle &\\
+\hline
+creat\_one\_obstacle & $\mathbb{Z}, \mathbb{Z}$   &  & \\
+\hline
+getBlocksGroup &    & pygame sprite group & \\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+\textcolor{red}{\st{$\mathit{X}$: $\mathbb{R}$}}\\
+\textcolor{red}{\st{$\mathit{Y}$: $\mathbb{R}$}}\\
+\textcolor{red}{\st{$\mathit{Width}$: $\mathbb{R}$}}\\
+\textcolor{red}{\st{$\mathit{Height}$: $\mathbb{R}$}}\\
+\textcolor{red}{\st{$\mathit{Area}$: $\mathbb{R}$}}\\
+blocks\_group := pygame sprite group
+\subsubsection*{State Invariant}
+None
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent new Obstacle():
+\begin{itemize}
+\item transition: \\
+create\_one\_obstacle(50, 400)\\
+create\_one\_obstacle(250, 400)\\
+create\_one\_obstacle(450, 400)\\
+create\_one\_obstacle(650, 400)
+\item output: $out := \mathit{self}$
+\item exception: exc := none
+\end{itemize}
+
+\noindent create\_one\_obstacle(xStart, yStart):
+\begin{itemize}
+\item transition: create blocks starting at (xStart, yStart) and add all
+the blocks to blocks\_group
+\item output: $out := \mathit{self}$
+\item exception: exc := none
+\end{itemize}
+
+\noindent getBlocksGroup():
+\begin{itemize}
+\item transition: none
+\item output: $out := \mathit{blocks\_group}$
+\item exception: exc := none
+\end{itemize}
+
+
+\noindent \textcolor{red}{\st{getX()}}:
+\begin{itemize}
+\item transition: none
+\item output: $out := X$
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{\st{getY()}}:
+\begin{itemize}
+\item transition: none
+\item output: $out := Y$
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{\st{getArea()}}:
+\begin{itemize}
+\item transition: none
+\item output: $out := Area$
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{\st{reduce\_area($\mathit{amount}$)}}:
+\begin{itemize}
+\item transition: $Area := Area - amount$ 
+\item output: none
+\item exception: none
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Ammo%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Ammo Module}
+
+\subsection*{Template Module}
+Ammo
+
+\subsection*{Uses}
+\textcolor{red}{pygame.sprite.Sprite}
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+Ammo = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new Ammo & $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$ & Ammo & IllegalArgumentException\\
+\hline
+\textcolor{red}{\st{setX}} & $\mathbb{R}$ &  & IllegalArgumentException\\
+\hline
+\textcolor{red}{\st{setY}} & $\mathbb{R}$ &  & IllegalArgumentException\\
+\hline
+\textcolor{red}{\st{getX }}&    & $\mathbb{R}$ & \\
+\hline
+\textcolor{red}{\st{getY}} &    & $\mathbb{R}$ & \\
+\hline
+\textcolor{red}{\st{reduce\_life}} & & & \\
+\hline
+\textcolor{red}{\st{isDead}} & & $\mathbb{B}$ & \\
+\hline
+\textcolor{red}{\st{move}} & & &\\
+\hline
+update & $\mathbb{Z}$ &&\\
+\hline
+getItemType &&$\mathbb{Z}$&\\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+$\mathit{speed}$: $\mathbb{R}$\\
+\textcolor{red}{\st{$\mathit{X}$: $\mathbb{R}$}}\\
+\textcolor{red}{\st{$\mathit{Y}$: $\mathbb{R}$}}\\
+\textcolor{red}{\st{$\mathit{X\_change}$: $\mathbb{R}$}}\\
+\textcolor{red}{\st{$\mathit{Y\_change}$: $\mathbb{R}$}}\\
+\textcolor{red}{\st{$\mathit{life}$: $\mathbb{N}$}}\\
+itemType: $\mathbb{Z}$\\
+$\mathit{image}$: \textit{.png file}\\
+$\mathit{rect}$: \textit{image.get\_rect (This is the API of pygame library)}
+
+\subsubsection*{State Invariant}
+None
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent new Ammo($\mathit{x}, \mathit{y}, \mathit{s}$):
+\begin{itemize}
+\item transition: \\ speed := s\\ itemType := 3\\$image := \textit{corresponding image}$\\
+ $rect := image.get\_rect(topleft\ =\ (x,\ y))$
+\item output: $out := \mathit{self}$
+\item exception: exc := $((\mathit{s} < 0) \vee (\mathit{x} < 0) \vee 
+  (\mathit{y} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent \textcolor{red}{\st{setX($\mathit{x}$)}}:
+\begin{itemize}
+\item transition: $X := x$ 
+\item output: none
+\item exception: $((\mathit{x} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent \textcolor{red}{\st{setY($\mathit{y}$)}}:
+\begin{itemize}
+\item transition: $Y := y$ 
+\item output: none
+\item exception: $((\mathit{y} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent \textcolor{red}{\st{getX()}}:
+\begin{itemize}
+\item transition: none
+\item output: $out := X$
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{\st{getY()}}:
+\begin{itemize}
+\item transition: none
+\item output: $out := Y$
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{\st{reduce\_life()}}:
+\begin{itemize}
+\item transition: $life := life - 1$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{\st{isDead()}}:
+\begin{itemize}
+\item transition: none
+\item output: $life = 0$
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{\st{move()}}:
+\begin{itemize}
+\item transition: \\
+$X := X + X\_change$\\
+$X \leq 0 \Rightarrow (X\_change,\ Y  := speed,\ Y + Y\_change)$\\
+$X \geq 736 \Rightarrow (X\_change,\ Y  := -1*speed,\ Y + Y\_change)$
+\item output: none
+\item exception: none
+\end{itemize}
+
+
+\noindent update(direction):
+\begin{itemize}
+\item transition: \\
+rect.x := rect.x + (direction $\times$ speed)
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent getItemType():
+\begin{itemize}
+\item transition: None
+\item output: out := itemType
+\item exception: none
+\end{itemize}
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%Bomb%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Bomb Module}
+
+\subsection*{Template Module}
+Bomb
+
+\subsection*{Uses}
+\textcolor{red}{pygame.sprite.Sprite}
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+Bomb = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new Bomb & $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$ & Bomb & IllegalArgumentException\\
+\hline
+\textcolor{red}{\st{setX}} & $\mathbb{R}$ &  & IllegalArgumentException\\
+\hline
+\textcolor{red}{\st{setY}} & $\mathbb{R}$ &  & IllegalArgumentException\\
+\hline
+\textcolor{red}{\st{getX }}&    & $\mathbb{R}$ & \\
+\hline
+\textcolor{red}{\st{getY}} &    & $\mathbb{R}$ & \\
+\hline
+\textcolor{red}{\st{reduce\_life}} & & & \\
+\hline
+\textcolor{red}{\st{isDead}} & & $\mathbb{B}$ & \\
+\hline
+\textcolor{red}{\st{move}} & & &\\
+\hline
+update & $\mathbb{Z}$ &&\\
+\hline
+getItemType &&$\mathbb{Z}$&\\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+$\mathit{speed}$: $\mathbb{R}$\\
+\textcolor{red}{\st{$\mathit{X}$: $\mathbb{R}$}}\\
+\textcolor{red}{\st{$\mathit{Y}$: $\mathbb{R}$}}\\
+\textcolor{red}{\st{$\mathit{X\_change}$: $\mathbb{R}$}}\\
+\textcolor{red}{\st{$\mathit{Y\_change}$: $\mathbb{R}$}}\\
+\textcolor{red}{\st{$\mathit{life}$: $\mathbb{N}$}}\\
+itemType: $\mathbb{Z}$\\
+$\mathit{image}$: \textit{.png file}\\
+$\mathit{rect}$: \textit{image.get\_rect (This is the API of pygame library)}
+
+\subsubsection*{State Invariant}
+None
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent new Bomb($\mathit{x}, \mathit{y}, \mathit{s}$):
+\begin{itemize}
+\item transition: \\ speed := s\\ itemType := 4\\$image := \textit{corresponding image}$\\
+ $rect := image.get\_rect(topleft\ =\ (x,\ y))$
+\item output: $out := \mathit{self}$
+\item exception: exc := $((\mathit{s} < 0) \vee (\mathit{x} < 0) \vee 
+  (\mathit{y} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent \textcolor{red}{\st{setX($\mathit{x}$)}}:
+\begin{itemize}
+\item transition: $X := x$ 
+\item output: none
+\item exception: $((\mathit{x} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent \textcolor{red}{\st{setY($\mathit{y}$)}}:
+\begin{itemize}
+\item transition: $Y := y$ 
+\item output: none
+\item exception: $((\mathit{y} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent \textcolor{red}{\st{getX()}}:
+\begin{itemize}
+\item transition: none
+\item output: $out := X$
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{\st{getY()}}:
+\begin{itemize}
+\item transition: none
+\item output: $out := Y$
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{\st{reduce\_life()}}:
+\begin{itemize}
+\item transition: $life := life - 1$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{\st{isDead()}}:
+\begin{itemize}
+\item transition: none
+\item output: $life = 0$
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{\st{move()}}:
+\begin{itemize}
+\item transition: \\
+$X := X + X\_change$\\
+$X \leq 0 \Rightarrow (X\_change,\ Y  := speed,\ Y + Y\_change)$\\
+$X \geq 736 \Rightarrow (X\_change,\ Y  := -1*speed,\ Y + Y\_change)$
+\item output: none
+\item exception: none
+\end{itemize}
+
+
+\noindent update(direction):
+\begin{itemize}
+\item transition: \\
+rect.x := rect.x + (direction $\times$ speed)
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent getItemType():
+\begin{itemize}
+\item transition: None
+\item output: out := itemType
+\item exception: none
+\end{itemize}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Heart%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Heart Module}
+
+\subsection*{Template Module}
+Heart
+
+\subsection*{Uses}
+\textcolor{red}{pygame.sprite.Sprite}
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+Heart = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new Heart & $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$ & Heart & IllegalArgumentException\\
+\hline
+\textcolor{red}{\st{setX}} & $\mathbb{R}$ &  & IllegalArgumentException\\
+\hline
+\textcolor{red}{\st{setY}} & $\mathbb{R}$ &  & IllegalArgumentException\\
+\hline
+\textcolor{red}{\st{getX }}&    & $\mathbb{R}$ & \\
+\hline
+\textcolor{red}{\st{getY}} &    & $\mathbb{R}$ & \\
+\hline
+\textcolor{red}{\st{reduce\_life}} & & & \\
+\hline
+\textcolor{red}{\st{isDead}} & & $\mathbb{B}$ & \\
+\hline
+\textcolor{red}{\st{move}} & & &\\
+\hline
+update & $\mathbb{Z}$ &&\\
+\hline
+getItemType &&$\mathbb{Z}$&\\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+$\mathit{speed}$: $\mathbb{R}$\\
+\textcolor{red}{\st{$\mathit{X}$: $\mathbb{R}$}}\\
+\textcolor{red}{\st{$\mathit{Y}$: $\mathbb{R}$}}\\
+\textcolor{red}{\st{$\mathit{X\_change}$: $\mathbb{R}$}}\\
+\textcolor{red}{\st{$\mathit{Y\_change}$: $\mathbb{R}$}}\\
+\textcolor{red}{\st{$\mathit{life}$: $\mathbb{N}$}}\\
+itemType: $\mathbb{Z}$\\
+$\mathit{image}$: \textit{.png file}\\
+$\mathit{rect}$: \textit{image.get\_rect (This is the API of pygame library)}
+
+\subsubsection*{State Invariant}
+None
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent new Heart($\mathit{x}, \mathit{y}, \mathit{s}$):
+\begin{itemize}
+\item transition: \\ speed := s\\ itemType := 2\\$image := \textit{corresponding image}$\\
+ $rect := image.get\_rect(topleft\ =\ (x,\ y))$
+\item output: $out := \mathit{self}$
+\item exception: exc := $((\mathit{s} < 0) \vee (\mathit{x} < 0) \vee 
+  (\mathit{y} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent \textcolor{red}{\st{setX($\mathit{x}$)}}:
+\begin{itemize}
+\item transition: $X := x$ 
+\item output: none
+\item exception: $((\mathit{x} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent \textcolor{red}{\st{setY($\mathit{y}$)}}:
+\begin{itemize}
+\item transition: $Y := y$ 
+\item output: none
+\item exception: $((\mathit{y} < 0) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent \textcolor{red}{\st{getX()}}:
+\begin{itemize}
+\item transition: none
+\item output: $out := X$
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{\st{getY()}}:
+\begin{itemize}
+\item transition: none
+\item output: $out := Y$
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{\st{reduce\_life()}}:
+\begin{itemize}
+\item transition: $life := life - 1$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{\st{isDead()}}:
+\begin{itemize}
+\item transition: none
+\item output: $life = 0$
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{\st{move()}}:
+\begin{itemize}
+\item transition: \\
+$X := X + X\_change$\\
+$X \leq 0 \Rightarrow (X\_change,\ Y  := speed,\ Y + Y\_change)$\\
+$X \geq 736 \Rightarrow (X\_change,\ Y  := -1*speed,\ Y + Y\_change)$
+\item output: none
+\item exception: none
+\end{itemize}
+
+
+\noindent update(direction):
+\begin{itemize}
+\item transition: \\
+rect.x := rect.x + (direction $\times$ speed)
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent getItemType():
+\begin{itemize}
+\item transition: None
+\item output: out := itemType
+\item exception: none
+\end{itemize}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%CollisionDetection%%%%%%%%%%%%%%%
+\section{CollisionDectection Module \textcolor{red}{This module has been deleted}}
+
+\subsection*{Service Module}
+Service
+
+\subsection*{Uses}
+None
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+None
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+isCollided & $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$ & $\mathbb{B}$ & \\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+None
+\subsubsection*{State Invariant}
+None
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent isCollided ($x_1, x_2, y_1, y_2$):
+\begin{itemize}
+\item transition: none
+\item output: $distance(x_1, x_2, y_1, y_2) \leq 27$
+\item exception: exc := none
+\end{itemize}
+
+\subsection*{Local Function}
+distance: [$\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$] $\Rightarrow$ $\mathbb{R}$\\
+distance($x_1, x_2, y_1, y_2$) $\equiv$ $\sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2}$
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%MonsterMatrix%%%%%%%%%%%%%%%%%%%%%
+\section{MonsterMatrix Module}
+
+\subsection*{Template Module}
+MonsterMatrix
+
+\subsection*{Uses}
+Monster, Ammo, Heart, Bomb, \textcolor{red}{pygame.sprite.Sprite}
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+MonsterMatrix = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new MonsterMatrix & $\mathbb{Z}$, $\mathbb{R}$, ($\mathbb{N}, \mathbb{N}$) & MonsterMatrix & IllegalArgumentException\\
+\hline
+\textcolor{red}{\st{getMatrix}} && seq of seq [Monster, Ammo, Heart, Bomb] &\\
+\hline
+\textcolor{red}{\st{move}} &&&\\
+\hline
+shoot &&&\\
+\hline
+round1 &&&\\
+\hline
+round2 &&&\\
+\hline
+round3 &&&\\
+\hline
+round4 &&&\\
+\hline
+round5 &&&\\
+\hline
+getMonstersGroup &&pygame sprite group&\\
+\hline
+boundaryDetection &&&\\
+\hline
+move\_down  &&&\\
+\hline
+getBulletsGroup &&pygame sprite group&\\
+\hline
+update &&&\\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+$\mathit{speed}$: $\mathbb{R}$\\
+\textcolor{red}{\st{$\mathit{M}$: $seq\ of\ seq[Ammo\ Monster\ Heart\ Bomb]$}}\\
+monsters\_group : pygame sprite group\\
+direction : $\mathbb{Z}$\\
+screen\_size\_info: ($\mathbb{R}, \mathbb{R}$)\\
+bullets\_group: pygame sprite group
+\subsubsection*{State Invariant}
+None
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent new MonsterMatrix($\mathit{round}, \mathit{s}$):
+\begin{itemize}
+\item transition: \\$\mathit{speed} := s$\\
+$\mathit{round} = 1 \Rightarrow M := m1(with\ monsters\ randomly\ replaced\ by\ Ammo,\ Bomb,\ Heart)$\\
+$\mathit{round} = 2 \Rightarrow M := m2(with\ monsters\ randomly\ replaced\ by\ Ammo,\ Bomb,\ Heart)$\\
+$\mathit{round} = 3 \Rightarrow M := m3(with\ monsters\ randomly\ replaced\ by\ Ammo,\ Bomb,\ Heart)$\\
+$\mathit{round} = 4 \Rightarrow M := m4(with\ monsters\ randomly\ replaced\ by\ Ammo,\ Bomb,\ Heart)$\\
+$\mathit{round} = 5 \Rightarrow M := m5(with\ monsters\ randomly\ replaced\ by\ Ammo,\ Bomb,\ Heart)$
+\item output: $out := \mathit{self}$
+\item exception: exc := $(\lnot (0 \leq \mathit{round} \leq 5) \vee (\mathit{s} < 0)) \Rightarrow \text{IllegalArgumentException})$
+\end{itemize}
+
+\noindent round1():
+\begin{itemize}
+\item transition: add m1 to monsters\_group with game items randomly replaced
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent round2():
+\begin{itemize}
+\item transition: add m2 to monsters\_group with game items randomly replaced
+\item output: none
+\item exception: none
+\end{itemize}
+
+
+\noindent round3():
+\begin{itemize}
+\item transition: add m3 to monsters\_group with game items randomly replaced
+\item output: none
+\item exception: none
+\end{itemize}
+
+
+\noindent round4():
+\begin{itemize}
+\item transition: add m4 to monsters\_group with game items randomly replaced
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent round5():
+\begin{itemize}
+\item transition: add m5 to monsters\_group with game items randomly replaced
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent getMonstersGroup():
+\begin{itemize}
+\item transition: none
+\item output: out := monsters\_group
+\item exception: none
+\end{itemize}
+
+\noindent boundaryDetection():
+\begin{itemize}
+\item transition: if any of the monster in monsters\_group touches the edge
+of the screen, move the whole monster matrix down.
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent move\_down():
+\begin{itemize}
+\item transition: $\forall\ gameItem \in monsters\_group : gameItem.rect.y\ +=\ 2$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{\st{\noindent getMatrix()}  Method removed}:
+\begin{itemize}
+\item transition: none
+\item output: $out := M$
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{\st{move()} Method removed}:
+\begin{itemize}
+\item transition: Monster Matrix moves in direction east $\rightarrow$ south $\rightarrow$ west
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent shoot():
+\begin{itemize}
+\item transition: Monsters $M$ shoot bullets randomly and add bullets object to
+bullets\_group.
+\item output: none
+\item exception: none
+\end{itemize}
+
+
+\noindent getBulletsGroup():
+\begin{itemize}
+\item transition: none
+\item output: out := bullets\_group
+\item exception: none
+\end{itemize}
+
+\noindent update():
+\begin{itemize}
+\item transition: \\$\forall\ gameItem \in monsters\_group : gameItem.update()$\\
+boundaryDetection()\\
+bullets\_group.update()
+\item output: none
+\item exception: none
+\end{itemize}
+
+\subsection*{Local Types}
+m1 $\equiv$ 
+$
+\begin{bmatrix}
+GM & GM & GM & GM & GM & GM & GM & GM & GM & GM \\
+GM & GM & GM & GM & GM & GM & GM & GM & GM & GM \\
+GM & GM & GM & GM & GM & GM & GM & GM & GM & GM \\
+GM & GM & GM & GM & GM & GM & GM & GM & GM & GM \\
+GM & GM & GM & GM & GM & GM & GM & GM & GM & GM 
+\end{bmatrix}
+$
+
+\vspace{1cm}
+\noindent 
+m2 $\equiv$ 
+$
+\begin{bmatrix}
+BM & BM & BM & BM & BM & BM & BM & BM & BM & BM \\
+BM & BM & BM & BM & BM & BM & BM & BM & BM & BM \\
+GM & GM & GM & GM & GM & GM & GM & GM & GM & GM \\
+GM & GM & GM & GM & GM & GM & GM & GM & GM & GM \\
+GM & GM & GM & GM & GM & GM & GM & GM & GM & GM 
+\end{bmatrix}
+$
+
+\vspace{1cm}
+\noindent 
+m3 $\equiv$ 
+$
+\begin{bmatrix}
+BM & BM & BM & BM & BM & BM & BM & BM & BM & BM \\
+BM & BM & BM & BM & BM & BM & BM & BM & BM & BM \\
+BM & BM & BM & BM & BM & BM & BM & BM & BM & BM \\
+BM & BM & BM & BM & BM & BM & BM & BM & BM & BM \\
+BM & BM & BM & BM & BM & BM & BM & BM & BM & BM 
+\end{bmatrix}
+$
+
+\vspace{1cm}
+\noindent 
+m4 $\equiv$ 
+$
+\begin{bmatrix}
+PM & PM & PM & PM & PM & PM & PM & PM & PM & PM \\
+BM & BM & BM & BM & BM & BM & BM & BM & BM & BM \\
+BM & BM & BM & BM & BM & BM & BM & BM & BM & BM \\
+BM & BM & BM & BM & BM & BM & BM & BM & BM & BM \\
+GM & GM & GM & GM & GM & GM & GM & GM & GM & GM 
+\end{bmatrix}
+$
+
+\vspace{1cm}
+\noindent 
+m5 $\equiv$ 
+$
+\begin{bmatrix}
+PM & PM & PM & PM & PM & PM & PM & PM & PM & PM \\
+PM & PM & PM & PM & PM & PM & PM & PM & PM & PM \\
+PM & PM & PM & PM & PM & PM & PM & PM & PM & PM \\
+PM & PM & PM & PM & PM & PM & PM & PM & PM & PM \\
+PM & PM & PM & PM & PM & PM & PM & PM & PM & PM 
+\end{bmatrix}
+$
+\\
+
+\noindent GM means green monster.\\ BM means blue monster.\\ PM means pink monster.
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%% MonsterDisplay %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{MonsterDisplay Module \textcolor{red}{This module has been deleted}}
+
+\subsection*{UserInterface Module}
+MonsterDisplay
+\subsection*{Uses}
+Monster, MonsterColor
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+N/A
+\subsubsection*{Exported Types}
+MonsterDisplay = ?
+
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | l |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new MonsterDisplay&pygame window object, MonsterColor&     MonsterDisplay  & \\
+\hline
+show       &	$\mathbb{N}$,	$\mathbb{N}$, Boolean      &           &          \\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{Environment Variables}
+screen: It is the game screen that is manipulated by the following functions to alter display. This is update by a precise frame rate to depict various game objects on the game screen.
+
+\subsubsection*{State Variables}
+$SCREEN: pygame\ window\ object$\\
+$img: \text{Monster Picture}$
+\subsubsection*{State Invariant}
+N/A
+\subsubsection*{Assumptions}
+N/A
+\subsubsection*{Access Routine Semantics}
+
+new MonsterDisplay($screen, monster\_color$)
+\begin{itemize}
+    \item transition: \\$SCREEN := screen$
+    \\$monster\_color = MonsterColor.GREEN \Rightarrow img := \text{green monster picture}$
+    \\$monster\_color = MonsterColor.BLUE \Rightarrow img := \text{blue monster picture}$
+    \\$monster\_color = MonsterColor.PINK \Rightarrow img := \text{pink monster picture}$
+    \item output: $out := \mathit{self}$
+    \item exception: None
+\end{itemize}
+
+\noindent show($x, y, isDead$):
+\begin{itemize}
+    \item transition:
+    $isDead \Rightarrow Display\ img\ at\ (x, y)$
+    \item output: none
+    \item input definitions: $x$ and $y$ represent the monster display coordinate. $isDead$ is used to clarify whether the monster is killed.
+    \item exception: None
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%SpaceShipDisplay%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{SpaceShipDisplay Module}
+
+\subsection*{UserInterface Module}
+SpaceShipDisplay
+\subsection*{Uses}
+SpaceShip, \textcolor{red}{pygame.sprite.Sprite}
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+N/A
+\subsubsection*{Exported Types}
+SpaceShipDisplay = ?
+
+{\small
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | l |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new SpaceShipDisplay       &pygame window object, \textcolor{red}{\st{$\mathbb{N}$}}, 
+pygame sprite group     &     SpaceShipDisplay      &           \\
+\hline
+show       &	\textcolor{red}{\st{$\mathbb{N}$,	$\mathbb{N}$ }}    &           &          \\
+\hline
+\end{tabular}
+}
+
+\subsection*{Semantics}
+\subsubsection*{Environment Variables}
+screen: It is the game screen that is manipulated by the following functions to alter display. This is update by a precise frame rate to depict various game objects on the game screen.
+\subsubsection*{State Variables}
+N/A
+\subsubsection*{State Invariant}
+$SCREEN: pygame\ window\ object$\\
+\textcolor{red}{\st{$img: \text{SpaceShip Picture}$}}\\
+space\_ship\_group: pygame sprite group
+\subsubsection*{Assumptions}
+N/A
+\subsubsection*{Access Routine Semantics}
+new SpaceShipDisplay($screen$, \textcolor{red}{\st{$spaceship\_number$}}, group)
+\begin{itemize}
+    \item transition: \\$SCREEN := screen$
+    \\\textcolor{red}{\st{$space\_number = 1 \Rightarrow img := \text{spaceship1 picture}$}}
+    \\\textcolor{red}{\st{$space\_number = 2 \Rightarrow img := \text{spaceship2 picture}$}}\\
+    space\_ship\_group := group
+    \item output: $out := self$
+    \item exception: None
+\end{itemize}
+
+\noindent show(\textcolor{red}{\st{$x, y$}}):
+\begin{itemize}
+    \item transition: space\_ship\_group.draw(SCREEN) \# This is pygame API
+    \item output: none
+    \item exception: None
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%BulletDisplay%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{BulletDisplay Module}
+
+\subsection*{UserInterface Module}
+BulletDisplay
+\subsection*{Uses}
+BulletState, Bullet, \textcolor{red}{pygame.sprite.Sprite}
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+N/A
+\subsubsection*{Exported Types}
+BulletDisplay = ?
+
+\subsubsection*{Exported Access Programs}
+
+\begin{tabular}{| l | l | l | l |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new BulletDisplay       &pygame window object, pygame sprite group&     BulletDisplay        &           \\
+\hline
+show       &	\textcolor{red}{\st{$\mathbb{N}$, $\mathbb{N}$, $BulletState$   }}  &           &          \\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{Environment Variables}
+screen: It is the game screen that is manipulated by the following functions to alter display. This is update by a precise frame rate to depict various game objects on the game screen.
+\subsubsection*{State Variables}
+$SCREEN: pygame\ window\ object$\\
+\textcolor{red}{\st{$img: \text{Bullet Picture}$}}\\
+bullets\_group: pygame sprite group
+\subsubsection*{State Invariant}
+N/A
+\subsubsection*{Assumptions}
+N/A
+\subsubsection*{Access Routine Semantics}
+
+new BulletDisplay($screen$, \textcolor{red}{bullets})
+\begin{itemize}
+     \item transition: \\$SCREEN := screen$
+    \\\textcolor{red}{\st{$img := \text{bullet picture}$}}\\
+    \textcolor{red}{bullets\_group := bullets}
+    \item output: $out := self$
+    \item exception: None
+\end{itemize}
+
+\noindent show(\textcolor{red}{\st{$x, y, state$}}):
+\begin{itemize}
+    \item transition: \textcolor{red}{\st{$state = BulletState.FIRE \Rightarrow \text{Display}\ img\ at\ (x, y)$}}\\
+    \textcolor{red}{bullets\_group.draw(SCREEN) \# This is pygame API}
+     \item output: none
+    \item exception: None
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%ScoreDisplay%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{ScoreDisplay Module}
+
+\subsection*{UserInterface Module}
+ScoreDisplay
+\subsection*{Uses}
+Score
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+N/A
+\subsubsection*{Exported Types}
+ScoreDisplay = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | l |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new ScoreDisplay       &pygame window object&     ScoreDisplay        &           \\
+\hline
+show       &	$\mathbb{N}$, $\mathbb{N}$, $\mathbb{N}$     &           &          \\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{Environment Variables}
+screen: It is the game screen that is manipulated by the following functions to alter display. This is update by a precise frame rate to depict various game objects on the game screen.
+
+\subsubsection*{State Variables}
+$SCREEN: pygame\ window\ object$
+\subsubsection*{State Invariant}
+N/A
+\subsubsection*{Assumptions}
+N/A
+\subsubsection*{Access Routine Semantics}
+
+new ScoreDisplay($screen$)
+\begin{itemize}
+    \item transition: $SCREEN := screen$
+    \item output: $out := self$
+    \item exception: None
+\end{itemize}
+
+\noindent show($x, y, score$):
+\begin{itemize}
+    \item transition: Display $score$ at $(x, y)$.
+    \item input definitions: $x$ and $y$ represent the score's coordinate. $score$ represent the total scores of player(s).
+    \item output: none
+    \item exception: None
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%ObstacleDisplay%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{ObstaclesDisplay Module}
+
+\subsection*{UserInterface Module}
+ObstaclesDisplay
+
+\subsection*{Uses}
+Obstacle \textcolor{red}{pygame.sprite.Sprite}
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+N/A
+\subsubsection*{Exported Types}
+ObstaclesDisplay = ?
+
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | l |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new ObstaclesDisplay       &pygame window object, pygame sprite group&     ObstaclesDisplay        &           \\
+\hline
+show       &	\textcolor{red}{\st{$\mathbb{N}$, $\mathbb{N}$, $\mathbb{B}$ }}    &           &          \\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{Environment Variables}
+screen: It is the game screen that is manipulated by the following functions to alter display. This is update by a precise frame rate to depict various game objects on the game screen.
+\subsubsection*{State Variables}
+$SCREEN: pygame\ window\ object$\\
+\textcolor{red}{\st{$img: \text{Obstacle Picture}$}}\\
+blocks\_group: pygame sprite group
+\subsubsection*{State Invariant}
+N/A
+\subsubsection*{Assumptions}
+N/A
+\subsubsection*{Access Routine Semantics}
+
+new ObstaclesDisplay($screen$, \textcolor{red}{blocks})
+\begin{itemize}
+    \item transition: \\
+    $SCREEN := screen$\\
+    \textcolor{red}{\st{$img := \text{Obstacle Picture}$}}\\
+    \textcolor{red}{blocks\_group := blocks}
+    \item output: $out := self$
+    \item exception: None
+\end{itemize}
+
+\noindent show(\textcolor{red}{\st{$x, y, isDestroy$}}):
+\begin{itemize}
+    \item transition: \textcolor{red}{\st{$\lnot isDestroy \Rightarrow Display\ img\ at\ (x, y)$}}\\
+    \textcolor{red}{blocks\_group.draw(SCREEN) \# This is pygame API}
+    
+    \item output: none
+    \item exception: None
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%Ammo Display%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{AmmoDisplay Module \textcolor{red}{This module has been deleted}}
+
+\subsection*{UserInterface Module}
+AmmoDisplay
+
+\subsection*{Uses}
+Ammo
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+N/A
+\subsubsection*{Exported Types}
+AmmoDisplay = ?
+\subsubsection*{Exported Access Programs}
+
+\begin{tabular}{| l | l | l | l |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new AmmoDisplay       &pygame window object&     AmmoDisplay        &           \\
+\hline
+show       &	 $\mathbb{N}$, $\mathbb{N}$, $\mathbb{B}$    &           &          \\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{Environment Variables}
+screen: It is the game screen that is manipulated by the following functions to alter display. This is update by a precise frame rate to depict various game objects on the game screen.
+\subsubsection*{State Variables}
+$SCREEN : \text{pygame window object}$\\
+$img : \text{Picture of Ammo}$
+\subsubsection*{State Invariant}
+N/A
+\subsubsection*{Assumptions}
+N/A
+\subsubsection*{Access Routine Semantics}
+
+new AmmoDisplay($screen$)
+\begin{itemize}
+    \item transition:\\
+    $SCRREN := screen$\\
+    $img := Ammo\ Picture$
+    \item output: $out := self$
+    \item exception: None
+\end{itemize}
+
+\noindent show(x, y, isShot):
+\begin{itemize}
+    \item transition: $\lnot isShot \Rightarrow Display\ img\ at\ (x, y)$
+    \item input definitions: x, y represent the coordinate of ammo picture
+    to be displayed. $isShot$ represents the state of ammo, it is True if the ammo is shoot.
+    \item output: none
+    \item exception: None
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%Heart Display%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{HeartDisplay Module \textcolor{red}{This module has been deleted}}
+
+\subsection*{UserInterface Module}
+HeartDisplay
+
+\subsection*{Uses}
+Heart
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+N/A
+\subsubsection*{Exported Types}
+HeartDisplay = ?
+\subsubsection*{Exported Access Programs}
+
+\begin{tabular}{| l | l | l | l |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new HeartDisplay       &pygame window object&     HeartDisplay        &           \\
+\hline
+show       &	 $\mathbb{N}$, $\mathbb{N}$, $\mathbb{B}$    &           &          \\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{Environment Variables}
+screen: It is the game screen that is manipulated by the following functions to alter display. This is update by a precise frame rate to depict various game objects on the game screen.
+\subsubsection*{State Variables}
+$SCREEN : \text{pygame window object}$\\
+$img : \text{Picture of Heart}$
+\subsubsection*{State Invariant}
+N/A
+\subsubsection*{Assumptions}
+N/A
+\subsubsection*{Access Routine Semantics}
+
+new HeartDisplay($screen$)
+\begin{itemize}
+    \item transition:\\
+    $SCRREN := screen$\\
+    $img := Heart\ Picture$
+    \item output: $out := self$
+    \item exception: None
+\end{itemize}
+
+\noindent show(x, y, isShot):
+\begin{itemize}
+    \item transition: $\lnot isShot \Rightarrow Display\ img\ at\ (x, y)$
+    \item input definitions: x, y represent the coordinate of Heart
+    picture to be displayed. $isShot$ represents the state of Heart, it is True if the Heart is shoot.
+    \item output: none
+    \item exception: None
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%Bomb%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{BombDisplay Module \textcolor{red}{This module has been deleted}}
+
+\subsection*{UserInterface Module}
+BombDisplay
+
+\subsection*{Uses}
+Bomb
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+N/A
+\subsubsection*{Exported Types}
+BombDisplay = ?
+\subsubsection*{Exported Access Programs}
+
+\begin{tabular}{| l | l | l | l |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new BombDisplay       &pygame window object&     BombDisplay        &           \\
+\hline
+show       &	 $\mathbb{N}$, $\mathbb{N}$, $\mathbb{B}$    &           &          \\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{Environment Variables}
+screen: It is the game screen that is manipulated by the following functions to alter display. This is update by a precise frame rate to depict various game objects on the game screen.
+\subsubsection*{State Variables}
+$SCREEN : \text{pygame window object}$\\
+$img : \text{Picture of Bomb}$
+\subsubsection*{State Invariant}
+N/A
+\subsubsection*{Assumptions}
+N/A
+\subsubsection*{Access Routine Semantics}
+
+new BombDisplay($screen$)
+\begin{itemize}
+    \item transition:\\
+    $SCRREN := screen$\\
+    $img := Bomb\ Picture$
+    \item output: $out := self$
+    \item exception: None
+\end{itemize}
+
+\noindent show(x, y, isShot):
+\begin{itemize}
+    \item transition: $\lnot isShot \Rightarrow Display\ img\ at\ (x, y)$
+    \item input definitions: x, y represent the coordinate of Bomb
+    picture
+     to be displayed. $isShot$ represents the state of Bomb, it is True if the Bomb is shoot.
+    \item output: none
+    \item exception: None
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%MonsterMatrixDisplay%%%%%%%%%%%%%%%%%%%
+\section{MonsterMatrixDisplay Module}
+
+\subsection*{UserInterface Module}
+MonsterMatrixDisplay
+
+\subsection*{Uses}
+\textcolor{red}{\st{BombDisplay, MonsterDisplay, AmmoDisplay, HeartDisplay,}} MonsterMatrix, \textcolor{red}{pygame.sprite.Sprite}
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+N/A
+\subsubsection*{Exported Types}
+MonsterMatrixDisplay = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | l |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new MonsterMatrixDisplay&pygame window object, pygame sprite group &MonsterMatrixDisplay&\\
+\hline
+show       &	\textcolor{red}{\st{ $MonsterMatrix$ }} &           &          \\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{Environment Variables}
+screen: It is the game screen that is manipulated by the following functions to alter display. This is update by a precise frame rate to depict various game objects on the game screen.
+\subsubsection*{State Variables}
+$SCREEN : \text{pygame window object}$\\
+monsters\_group : pygame sprite group
+\subsubsection*{State Invariant}
+N/A
+\subsubsection*{Assumptions}
+N/A
+\subsubsection*{Access Routine Semantics}
+new MonsterMatrixDisplay($screen$, \textcolor{red}{monsters})
+\begin{itemize}
+    \item transition:\\ $SCREEN := screen$ \\ \textcolor{red}{monsters\_group := monsters}
+    \item output: $out := self$
+    \item exception: None
+\end{itemize}
+
+\noindent show(\textcolor{red}{\st{$M$}}):
+\begin{itemize}
+    \item transition: \textcolor{red}{\st{$\forall object \in M\ |\ object.show(x,\ y,\ isDead/isShot)$\\
+    $M$ here could be $Monster\ Ammo\ Heart\ Bomb$}}\\
+    \textcolor{red}{monsters\_group.draw{SCREEN} \# This is pygame API}
+    \item output: none
+    \item exception: None
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%SetUpDisplay%%%%%%%%%%%%%%%%%%%%%
+\section{\textcolor{red}{ WindowSetUp} Module}
+
+\subsection*{UserInterface Module}
+\textcolor{red}{\st{SetUpDisplay} WindowSetUp }
+\subsection*{Uses}
+None
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+N/A
+\subsubsection*{Exported Types}
+\textcolor{red}{\st{SetUpDisplay} WindowSetUp } = ?
+
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | l |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new \textcolor{red}{\st{SetUpDisplay} WindowSetUp }       &      \textcolor{red}{$\mathbb{Z}, \mathbb{Z}$}     &     \textcolor{red}{\st{SetUpDisplay} WindowSetUp }       &           \\
+\hline
+\textcolor{red}{\st{show  } Method removed}     &	   &           &          \\
+\hline
+getScreen      &	   &pygame window  object&          \\
+\hline
+setTitle &&&\\
+\hline
+setIcon &&&\\
+\hline
+setBackground &&&\\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{Environment Variables}
+screen: It is the game screen that is manipulated by the following functions to alter display. This is update by a precise frame rate to depict various game objects on the game screen.
+
+\subsubsection*{State Variables}
+$SCREEN : \text{pygame window object}$\\
+\textcolor{red}{w: $\mathbb{Z}$}\\
+\textcolor{red}{h: $\mathbb{Z}$}
+
+\subsubsection*{State Invariant}
+N/A
+\subsubsection*{Assumptions}
+N/A
+\subsubsection*{Access Routine Semantics}
+
+new \textcolor{red}{\st{SetUpDisplay} WindowSetUp }(\textcolor{red}{width, height})
+\begin{itemize}
+    \item transition: \\$SCREEN := new\ pygame\ window\ object$\\ \textcolor{red}{w := width}\\ \textcolor{red}{h := height} 
+    \item output: $out := self$
+    \item exception: None
+\end{itemize}
+
+\noindent \textcolor{red}{\st{show()}}:
+\begin{itemize}
+    \item transition: Display The following contents
+    \begin{itemize}
+    \item Welcoming message
+    \item Display game mode selection
+    \item Game instruction
+    \item Prevent game addiction message
+    \end{itemize}
+    \item output: none
+    \item exception: None
+\end{itemize}
+
+\noindent getScreen()
+\begin{itemize}
+\item transition: none
+\item output: $out := SCREEN$
+\item exception: none
+\end{itemize}
+
+\noindent setTitle()
+\begin{itemize}
+\item transition: set Title of the game window
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent setIcon()
+\begin{itemize}
+\item transition: set Icon of the game window
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent setBackgroup()
+\begin{itemize}
+\item transition: set background of the game window
+\item output: none
+\item exception: none
+\end{itemize}
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%SingleController%%%%%%%%%%%%%%%%%%%%
+\section{SingleController Module}
+
+\subsection*{Template Module}
+SingleController
+
+\subsection*{Uses}
+BulletDisplay, MonsterMatrixDisplay, SpaceShipDisplay, ScoreDisplay,
+ObstaclesDisplay, \textcolor{red}{pygame.sprite.Spite}
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+SingleController = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new SingleController & pygame window, pygame screen & SingleController & \\
+\hline
+run & Keyboard Inputs &  & \\
+\hline
+\textcolor{red}{getScore} &&$\mathbb{Z}$&\\
+\hline
+\textcolor{red}{doesWin} &&$\mathbb{B}$&\\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+All the model objects and corresponding display objects.
+\subsubsection*{State Invariant}
+None
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent new SingleController(window, screen):
+\begin{itemize}
+\item transition: Create the model objects and corresponding display objects.
+\item output: $out := \mathit{self}$
+\item exception: None
+\end{itemize}
+
+\noindent run()
+\begin{itemize}
+\item transition: The controller should do the following things:
+\begin{itemize}
+\item Let player move space by pressing $\leftarrow$ and $\rightarrow$.
+\item Let player shoot bullet by pressing \verb|SPACE|.
+\item If any monster is dead or any game item is shot, let them disappear from the game window. 
+\item If any monsters are shot, increase the score.
+\item If any game items are shot, do corresponding operations. 
+\item If a round is finished, go to the next round.
+\item If the spaceship is shot, decrease spaceship lives.
+\item If the obstacle is shot, decrease obstacle areas.
+\end{itemize}
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{getScore()}
+\begin{itemize}
+\item transition : none
+\item output : out := score of this game
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{doesWin()}
+\begin{itemize}
+\item transition : none
+\item output : out := if the player wins
+\item exception: none
+\end{itemize}
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%DoubleContoller%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{DoubleController Module}
+
+\subsection*{Template Module}
+DoubleController
+
+\subsection*{Uses}
+BulletDisplay, MonsterMatrixDisplay, SpaceShipDisplay, ScoreDisplay,
+ObstaclesDisplay, \textcolor{red}{pygame.sprite.Sprite}
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+DoubleController = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new DoubleController & pygame window, pygame screen  & DoubleController & \\
+\hline
+run & Keyboard Inputs &  & \\
+\hline
+\textcolor{red}{getScore} &&$\mathbb{Z}$&\\
+\hline
+\textcolor{red}{doesWin} &&$\mathbb{B}$&\\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+All the model objects and corresponding display objects.
+\subsubsection*{State Invariant}
+None
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent new DoubleController(window, screen):
+\begin{itemize}
+\item transition: Create the model objects and corresponding display objects.
+\item output: $out := \mathit{self}$
+\item exception: None
+\end{itemize}
+
+\noindent run()
+\begin{itemize}
+\item transition: The controller should do the following things:
+\begin{itemize}
+\item Let player1 move space by pressing $\leftarrow$ and $\rightarrow$.
+\item Let player1 shoot bullet by pressing \verb|SPACE|.
+\item Let player2 move space by pressing \verb|A| and \verb|D|.
+\item Let player2 shoot bullet by pressing \verb|S|.
+\item If any monster is dead or any game item is shot, let them disappear from the game window. 
+\item If any monsters are shot, increase the score.
+\item If any game items are shot, do corresponding operations. 
+\item If a round is finished, go to the next round.
+\item If the spaceship is shot, decrease spaceship lives.
+\item If the obstacle is shot, decrease obstacle areas.
+\end{itemize}
+\item output: none
+\item exception: none
+\end{itemize}
+
+
+
+\noindent \textcolor{red}{getScore()}
+\begin{itemize}
+\item transition : none
+\item output : out := score of this game
+\item exception: none
+\end{itemize}
+
+\noindent \textcolor{red}{doesWin()}
+\begin{itemize}
+\item transition : none
+\item output : out := if the player wins
+\item exception: none
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%TotalController%%%%%%%%%%%%%%%%%
+\section{TotalController Module}
+
+\subsection*{Template Module}
+TotalController
+
+\subsection*{Uses}
+\textcolor{red}{\st{SetUpDisplay} WindowSetUp}
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+TotalController = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new TotalController &  & TotalController & \\
+\hline
+run & Keyboard Input &  & \\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+$s : \text{WindowSetUp}$
+\subsubsection*{State Invariant}
+None
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent new TotalController():
+\begin{itemize}
+\item transition: $s := new SetUpDisplay()$
+\item output: $out := \mathit{self}$
+\item exception: None
+\end{itemize}
+
+\noindent run()
+\begin{itemize}
+\item transition:\\
+$s.run()$\\
+If user chooses single player model $\Rightarrow$ Invoke SingleController\\
+If user chooses double player model $\Rightarrow$ Invoke DoubleController\\
+\item output: none
+\item exception: none
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Diver%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Driver Module}
+
+\subsection*{Template Module}
+Driver
+
+\subsection*{Uses}
+TotalController
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+Driver = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new Driver &  & Driver & \\
+\hline
+run & &  & \\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+$t : \text{TotalController}$
+\subsubsection*{State Invariant}
+None
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent new Driver():
+\begin{itemize}
+\item transition: $t := new\ TotalController()$
+\item output: $out := \mathit{self}$
+\item exception: None
+\end{itemize}
+
+\noindent run()
+\begin{itemize}
+\item transition: $t.run()$
+\item output: none
+\item exception: none
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%LifeDisplay%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{LifeDisplay Module \textcolor{red}{Newly Added module}}
+
+\subsection*{Template Module}
+LifeDisplay
+
+\subsection*{Uses}
+\textcolor{red}{pygame.sprite.Sprite}
+
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+LifeDisplay = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new LifeDisplay & pygame screen & LifeDisplay & \\
+\hline
+show & $\mathbb{R}, \mathbb{R}, \mathbb{Z}, \mathbb{Z}$ &  & \\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+$SCREEN : \text{pygame window object}$
+\subsubsection*{State Invariant}
+None
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent new LifeDisplay(screen):
+\begin{itemize}
+\item transition: $SCREEN := screen$
+\item output: $out := \mathit{self}$
+\item exception: None
+\end{itemize}
+
+\noindent show(x, y, life, index)
+\begin{itemize}
+\item transition: display life at (x, y) \# Index is used to indicate which 
+spaceship's life to be displayed
+\item output: none
+\item exception: none
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%Welcome message%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{WelcomeMessageDisplay Module \textcolor{red}{Newly Added module}}
+
+\subsection*{Template Module}
+WelcomeMessageDisplay
+\subsection*{Uses}
+\textcolor{red}{pygame.sprite.Sprite}
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+WelcomeMessageDisplay = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new WelcomeMessageDisplay & pygame screen &WelcomeMessageDisplay & \\
+\hline
+
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+None
+\subsubsection*{State Invariant}
+None
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent new WelcomeMessageDisplay(screen):
+\begin{itemize}
+\item transition: display welcome message at screen
+\item output: $out := \mathit{self}$
+\item exception: None
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ModeSelection%%%%%%%%%%%%%%%%%%%%
+\section{ModeSelectionDisplay Module \textcolor{red}{Newly Added module}}
+
+\subsection*{Template Module}
+ModeSelectionDisplay
+
+\subsection*{Uses}
+\textcolor{red}{pygame.sprite.Sprite}
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+ModeSelectionDisplay = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new ModeSelectionDisplay & pygame screen &ModeSelectionDisplay & \\
+\hline
+
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+None
+\subsubsection*{State Invariant}
+None
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent new ModeSelectionDisplay(screen):
+\begin{itemize}
+\item transition: display mode selection message at screen
+\item output: $out := \mathit{self}$
+\item exception: None
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Game Instruction %%%%%%%%%%%%%%%%%%%
+\section{GameInstruction Module \textcolor{red}{Newly Added module}}
+
+\subsection*{Template Module}
+GameInstruction
+
+\subsection*{Uses}
+\textcolor{red}{pygame.sprite.Sprite}
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+GameInstruction = ?
+\subsubsection*{Exported Access Programs}
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new GameInstruction & pygame screen, game mode &GameInstruction & \\
+\hline
+
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+None
+\subsubsection*{State Invariant}
+None
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent new GameInstruction(screen, mode):
+\begin{itemize}
+\item transition: display proper game instruction according to mode at screen
+\item output: $out := \mathit{self}$
+\item exception: None
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%Game item introduction %%%%%%%%%%%%%%%%%%
+\section{GameItemIntroductionDisplay Module \textcolor{red}{Newly Added module}}
+
+\subsection*{Template Module}
+GameItemIntroductionDisplay
+
+\subsection*{Uses}
+\textcolor{red}{pygame.sprite.Sprite}
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+GameItemIntroductionDisplay = ?
+\subsubsection*{Exported Access Programs}
+{\scriptsize
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new GameItemIntroductionDisplay & pygame screen &GameItemIntroductionDisplay& \\
+\hline
+\end{tabular}
+}
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+None
+\subsubsection*{State Invariant}
+None
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent new GameItemIntroductionDisplay(screen):
+\begin{itemize}
+\item transition: display game items introduction on screen
+\item output: $out := \mathit{self}$
+\item exception: None
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%Lose Disyplay
+\section{LoseDisplay Module \textcolor{red}{Newly Added module}}
+
+\subsection*{Template Module}
+LoseDisplay
+
+\subsection*{Uses}
+\textcolor{red}{pygame.sprite.Sprite}
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+LoseDisplay = ?
+\subsubsection*{Exported Access Programs}
+
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new LoseDisplay & pygame screen, $\mathbb{Z}$ &LoseDisplay& \\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+None
+\subsubsection*{State Invariant}
+None
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent new LoseDisplay(screen, score):
+\begin{itemize}
+\item transition: display lose message and score on screen
+\item output: $out := \mathit{self}$
+\item exception: None
+\end{itemize}
+\newpage
+%%%%%%%%%%%%%%%%%%
+
+%%%%%Win Disyplay
+\section{WinDisplay Module \textcolor{red}{Newly Added module}}
+
+\subsection*{Template Module}
+WinDisplay
+
+\subsection*{Uses}
+\textcolor{red}{pygame.sprite.Sprite}
+
+\subsection*{Syntax}
+\subsubsection*{Exported Constants}
+None
+\subsubsection*{Exported Types}
+WinDisplay = ?
+\subsubsection*{Exported Access Programs}
+
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+new WinDisplay & pygame screen, $\mathbb{Z}$ &WinDisplay& \\
+\hline
+\end{tabular}
+
+\subsection*{Semantics}
+\subsubsection*{State Variables}
+None
+\subsubsection*{State Invariant}
+None
+\subsubsection*{Assumptions}
+None
+\subsubsection*{Access Routine Semantics}
+\noindent new WinDisplay(screen, score):
+\begin{itemize}
+\item transition: display win message and score on screen
+\item output: $out := \mathit{self}$
+\item exception: None
+\end{itemize}
+%%%%%%%%%%%%%%%%%%
+\end {document}

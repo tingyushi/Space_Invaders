@@ -1,0 +1,1177 @@
+\documentclass[12pt]{article}
+
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{paralist}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{color}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{multirow}
+\geometry{margin = 0.75in}
+\title{SE 3XA3: Test Plan\\Space Invaders}
+
+\begin{document}
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%Team Information%%%%%%%%%%%%%%%%%%%%%%
+{\Large Team Information:}
+\begin{table}[htp]
+\centering
+{\Large
+\begin{tabular}{|c|c|c|}
+\hline
+\multicolumn{1}{|l|}{Team Number} & Name         & MACID   \\ \hline
+\multirow{3}{*}{L03 G07}          & Qianlin Chen & chenq84 \\ \cline{2-3} 
+                                  & Jiacheng Wu  & wuj187  \\ \cline{2-3} 
+                                  & Tingyu Shi   & shit19  \\ \hline
+\end{tabular}
+}
+\end{table}
+
+%%%%%%%%%%% Revision History%%%%%%%%%%%%%
+\newpage
+\begin{table}[htp]
+\caption{Revision History} 
+\begin{tabularx}{\textwidth}{llX}
+\toprule
+\textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
+\midrule
+January 26, 2022 & All team members & Initial Document\\
+March 10, 2022 & Qianlin Chen & Test for functional req and nonfunction req\\
+March 10, 2022 & Jiacheng Wu & General Information, Plan and matrix\\
+March 10, 2022 & Tingyu Shi & Tests for Nonfunctional req, section 4 - 7\\
+\bottomrule
+\end{tabularx}
+\end{table}
+\newpage
+%%%%%%%%%%%%%%Contents%%%%%%%%%%%%%%%%
+\tableofcontents
+\listoftables
+\listoffigures
+\cleardoublepage
+%%%%%%%%%%% General Information%%%%%%%
+\section{General Information}
+\subsection{Purpose}
+The test plan describes the detailed procedures of our testing towards the functional and non-functional requirements of our project "Space Invaders". The purpose of this document is to apply the methods and plans after the project is implemented in order to minimize the chance the users will see errors and build the confidence the project will be working properly.
+\subsection{Scope}
+The document will include the plans for testing, all the tests for functional and non-functional requirements in the SRS document and tests of proof of concept. After that, the document will include the plans for unit tests. The document will be revised as the project is developed and modified.
+\subsection{Acronyms, Abbreviations, and Symbols}
+\begin{table}[htp]
+\caption{Table of Abbreviations} \label{Table}
+
+\begin{tabularx}{\textwidth}{p{3cm}X}
+\toprule
+\textbf{Abbreviation} & \textbf{Definition} \\
+\midrule
+SRS & Software requirement specification\\\\
+PC & personal computer\\\\
+FPS & frams per second\\\\
+GUI & graphic user interface\\\\
+\bottomrule
+\end{tabularx}
+\end{table}
+\begin{table}[htp]
+\caption{Table of Definitions} \label{Table}
+\begin{tabularx}{\textwidth}{p{3cm}X}
+\toprule
+\textbf{Term} & \textbf{Definition}\\
+\midrule
+Space invader & The name of a video game\\\\
+Graphic User Interface & a graphic representation for users to interact\\\\
+Score & The number that represents the achivement of users\\\\
+Players & the users of the game that follow certain rules to succeed\\\\
+Aircraft & the users will controll the aircraft to play the game\\\\
+Monster & the goal of the game, the target the aircraft to attack.\\\\
+Ammo item & the element in game that can boost users' ammo\\\\
+Health item & If the aircraft shoots a Health item, the aircraft will gain one more health point.\\\\
+Bomb item & If the aircraft shoots a Bomb item, the bomb will explode and do damage to a big range of the area in the
+monster matrix.\\\\
+\bottomrule
+\end{tabularx}
+\end{table}
+\newpage	
+\subsection{Overview of Document}
+The plans for testing will include the description of the software, the team to test it, the approach to automated testing, the tools for testing and the schedule for testing. After that, it will go through all the detailed tests for requirements specified in SRS along with the proof of concept.Lastly we will compare with the original implementation and discuss the unit testing plan.
+\section{Plan}	
+\subsection{Software Description}
+Space Invaders is a fixed shooter in which the player moves aircraft horizontally across the bottom of the screen and fires at monsters overhead. The original repository was using pygame and python to implement. We will use python and pygame to implement it and apply the software principles to redevelop the game. Additionally, we will upgrade the graphic user interface of it.
+\subsection{Test Team}
+The core test team consists of all members of Group-07 are responsible for writing and executing tests:
+\begin{itemize}
+\item Tingyu Shi
+\item Qianlin Chen
+\item Jiacheng Wu
+\end{itemize}
+\subsection{Automated Testing Approach}
+In this project, we mainly use the exploration test since we will test the display and controller and the tests of those depend on the input of the users.However, the unit test will be one of our automated testing approach to test our models. Models include the following:
+\begin{itemize}
+\item Monster
+\item MonsterMatrix
+\item SpaceShip
+\item Score
+\item Bullets
+\end{itemize}
+Since the game is still in the process of implementation,
+more models may be created in the future.
+\subsection{Testing Tools}
+The testing tool we are going to use is Pytest. It's a testing tool used for unit test for python programs.
+\subsection{Testing Schedule}
+		
+See Gantt Chart at the following url:
+\begin{itemize}
+\item \href{https://gitlab.cas.mcmaster.ca/shit19/2022_winter_3xa3_l03_g07/-/blob/main/ProjectSchedule/Gantt_Project_TestPlan_Finished.gan}{\textcolor{red}{.gan File}}
+\item \href{https://gitlab.cas.mcmaster.ca/shit19/2022_winter_3xa3_l03_g07/-/blob/main/ProjectSchedule/Gantt_Project_TestPlan_Finished.pdf}{\textcolor{red}{.pdf File}}
+\end{itemize}
+
+\section{System Test Description}
+\subsection{Tests for Functional Requirements}
+The software architecture used for this game is MVC. 
+As a result, we have three testing areas, which are 
+model, view and control.\\
+\textcolor{blue}{NOTE:} The game implementation is not
+finished yet, so you may not be able to find some of methods
+mentioned below in our source code.
+\subsubsection{Model}
+\begin{enumerate}[1.]
+\item Test-FR15-M1\\
+Type: Unit test (functional, dynamic, automated)\\
+Initial State: Bullet from the aircraft hits one of the monsters.\\
+Input/Condition: \verb|getScore()| is called on \verb|Score| object.\\
+Output/Result: Player's score increase.\\
+How test will be performed: Testers can check whether the score goes up once they hit monsters by comparing with the original score.
+\item Test-FR16-M2\\
+Type: Unit test (functional, dynamic, automated)\\
+Initial State: Monsters’ bullets hit aircraft.\\
+Input/Condition: \verb|getLives()| is called on \verb|SpaceShip|
+object.\\
+Output/Result: Aircraft's lives decrease.\\
+How test will be performed: Testers can check whether the number of lives goes down once the aircraft is hit by bullets from monsters.
+\item Test-FR16-M3\\
+Type: Unit test (functional, dynamic, automated)\\
+Initial State: Bullets from aircraft hit the health game item in the monster matrix.\\
+Input/Condition: \verb|getLives()| is called on \verb|SpaceShip|
+object.\\
+Output/Result: Aircraft's lives increase.\\
+How test will be performed: Testers can check whether the number of lives goes up once bullets from aircraft hit the health game item in the monster matrix.
+\newpage
+\item Test-FR25-M4\\
+Type: Unit test (functional, dynamic, automated)\\
+Initial State: A green monster is hit by one bullet 
+from the aircraft.\\
+Input/Condition: \verb|isDead()| is called on \verb|Monster| object.\\
+Output/Result: \verb|isDead()| should return true.\\
+How test will be performed: Testers can check if the \verb|isDead()| returns true or just observe whether the green monster disappears in the monster matrix or not if
+ the green monster is hit by one bullet from the aircraft.
+\item Test-FR26-M5\\
+Type: Unit test (functional, dynamic, automated)\\
+Initial State: A blue monster is hit by two bullets 
+from the aircraft.\\
+Input/Condition: \verb|isDead()| is called on \verb|Monster| object.\\
+Output/Result: \verb|isDead()| should return true.\\
+How test will be performed: Testers can check if the \verb|isDead()| returns true or just observe whether the blue monster disappears in the monster matrix or not if
+ the blue monster is hit by two bullets from the aircraft.
+\item Test-FR27-M6\\
+Type: Unit test (functional, dynamic, automated)\\
+Initial State: A pink monster is hit by three bullets 
+from the aircraft.\\
+Input/Condition: \verb|isDead()| is called on \verb|Monster| object.\\
+Output/Result: \verb|isDead()| should return true.\\
+How test will be performed:Testers can check if the
+\verb|isDead()| returns true or just observe whether the 
+pink monster disappears in the monster matrix or not if
+the pink monster is hit by three bullets from the
+aircraft.
+\item Test-FR29-M7\\
+Type: Unit test (functional, dynamic, automated)\\
+Initial State: One bullet hits an obstacle.\\
+Input/Condition: \verb|getArea()| is called from the \verb|Obstacle| object.\\
+Output/Result: The return value from the above method call should be less than the previous obstacle area.\\ 
+How test will be performed: Testers can call \verb|getArea()| on \verb|Obstacle| object and record the return value as $S_1$. Then the tester can make the aircraft to shoot one bullet toward the obstacle and then call \verb|getArea()| again and record the return value as $S_2$. Finally, make sure that $S_2 < S_1$.
+\item Test-FR30-M8\\
+Type: Unit test (functional, dynamic, manual)\\
+Initial State: Game GUI presents one game item, one 
+monster and one aircraft.\\
+Input/Condition: Monster shoots one bullet to the game
+item firstly and aircraft shoots one bullet to the game item 
+secondly.\\
+Output: The game item should only disappear after being 
+hit by the bullet from the aircraft.\\
+How test will be performed: Testers can set the game GUI
+with just three elements, which are a monster, a game 
+item and a aircraft. Let the monster and the aircraft 
+shoot bullets to the game item alternatively. The 
+game item should only disappear after being hit by the bullet 
+from the aircraft.
+\newpage
+\item Test-FR31-M9\\ 
+Type: Unit test (functional, dynamic, manual)\\
+Initial State: Start a new game round.\\
+Input/Condition: No inputs will be given 
+for this test case. However, testers should record the
+number of game items presented in the monster matrix.\\
+Output/Result: The number of game items in each game round
+should be less than 5.\\
+How test will be performed: Testers can start a new game
+round multiple times and record the number of game items
+in each game round. After that, calculate the average
+number of game items presented in one game round. The
+result should be less than 5.
+\item Test-FR32-M10\\
+Type: Unit test (functional, dynamic, manual)\\
+Initial State: GUI displays a monster matrix with a bomb
+game item in it.\\
+Input/Condition: Testers operate the aircraft and shoot a bullet
+from the aircraft to the bomb game item.\\
+Output/Result: 8 monsters around the bomb game item
+should disappear 
+after the bomb is hit.\\
+How test will be performed: Testers set a game round
+with just one bomb game item in the monster matrix and then operate
+the aircraft to shoot the bomb game item.
+\item Test-FR33-M11\\
+Type: Unit test (functional, dynamic, manual)\\
+Initial State: GUI displays a monster matrix with a ammo
+game item in it.\\
+Input/Condition: Testers operate the aircraft and shoot a bullet
+from the aircraft to the ammo game item.\\
+Output/Result: The number of bullets can be shot from the 
+aircraft should increase 1.\\
+How test will be performed: Testers set a game round
+with just one ammo game item in the monster matrix and then operate
+the aircraft to shoot the ammo game item.
+\item Test-FR34-M12\\
+Type: Unit test (functional, dynamic, manual)\\
+Initial State: GUI displays a monster matrix with a heart
+game item in it.\\
+Input/Condition:  Testers operate the aircraft and shoot a bullet
+from the aircraft to the heart game item.\\
+Output/Result: Aircraft's lives should increase 1.\\
+How test will be performed:  Testers set a game round
+with just one heart game item in the monster matrix and then operate
+the aircraft to shoot the heart game item.
+\item Test-FR35.1-M13\\
+Type: Functional, Dynamic, Manual\\
+Initial State: Several monster matrices are loaded.\\ 
+Input/Condition: No inputs will be given in this test case. Testers
+need to make a screenshot for
+each monster matrix.\\
+Output/Result: Game items should occur randomly in 
+different matrices.\\
+How test will be performed: Testers can load several 
+monster matrices and make a screenshot for each matrix.
+After that, testers can analyze screenshots to ensure
+the random occurrence of game items.
+\newpage
+\item Test-FR39-M14\\
+Type: Unit test (functional, dynamic, manual)\\
+Initial State: Start a new game.\\
+Input/Condition: Testers shoot bullets from 
+aircraft by press \verb|SPACE| key.\\
+Output/Result: The number of bullets should be 1.\\
+How test will be performed: Testers start a new game
+and shoot bullets by press \verb|SPACE| key.
+\end{enumerate}
+\subsubsection{View}
+\begin{enumerate}[1.]
+\item Test-FR1-V1\\
+Type: Functional, Dynamic, Manual\\
+Initial State: Welcome message has been displayed.\\
+Input/Conditin: Testers enter any key.\\
+Output/Result: The GUI should display a message and let testers
+to choose the play mode.\\
+How test will be performed: Testers should press any 
+key after the welcoming message has been displayed. 
+\item Test-FR2-V2\\
+Type: Functional, Dynamic, Manual\\
+Initial State: Game mode selection UI has been displayed.\\
+Input/Condition: Testers enter \verb|S| or \verb|D| to
+choose the play mode.\\
+Output/Result: GUI should display three monster types and corresponding scores.\\
+How test will be performed: Testers should press \verb|S| or \verb|D| to
+choose the play mode and then check if three monster 
+types and corresponding scores can be displayed.
+\item Test-FR3-V3\\
+Type: Functional, Dynamic, Manual\\
+Initial State: Game mode selection UI has been displayed.\\
+Input/Condition: Testers enter \verb|S| or \verb|D| to
+choose the play mode.\\
+Output/Result: GUI should display game instructions.\\
+How test will be performed: Testers should press \verb|S| or \verb|D| to
+choose the play mode and then check if 
+game instructions can be displayed.
+\item Test-FR4-V4\\
+Type: Functional, Manual, Dynamic\\
+Initial State:  Game instructions and introduction to 
+monsters have been displayed.\\
+Input/Condition
+: Testers enter the game by pressing any key.\\
+Output/Result: The game should display the total score
+at the left
+up corner and the initial score should be 0.\\
+How test will be performed: This is really an exploratory 
+test. Testers can play the game and the score information
+should always be available at the left up corner.
+\newpage
+\item Test-FR5-V5\\
+Type: Functional, Manual, Dynamic\\
+Initial State: Game instructions and introduction to 
+monsters have been displayed.\\
+Input/Condition: Testers enter the game by pressing any key.\\
+Output/Result: The game should display total 5 lives at 
+the beginning of the game for the aircraft.\\
+How test will be performed: Testers can enter the game 
+by pressing any key after reading the game instruction and
+introduction about the monsters.
+\item Test-FR6-V6\\
+Type: Functional, Manual, Dynamic\\
+Initial State: Game instructions and introduction to 
+monsters have been displayed.\\
+Input/Condition: Testers press any key to enter the game.\\
+Output/Result: The game should display a galaxy picture as the background.\\
+How test will be performed: A tester can check if a galaxy picture is displayed in each game round as the 
+background.
+\item Test-FR7-V7\\
+Type: Functional, Manual, Dynamic\\
+Initial State: Game instructions and introduction to 
+monsters have been displayed.\\
+Input/Condition: Testers enter to the game by press any
+key.\\
+Output/Result: The game should display a monster matrix(5 rows and 10 columns).\\
+How test will be performed: Testers can check if a monster matrix(5 rows and 10 columns) is displayed in each game round by playing the game.
+\item Test-FR8-V8\\
+Type: Functional, Manual, Dynamic\\
+Initial State: Game instructions and introduction to 
+monsters have been displayed.\\
+Input/Condition: Testers press any key to enter
+the game and then make a screenshot of the monster
+matrix.\\
+Output/Result: Screenshot about monster matrix.\\
+How test will be performed: Multiple testers can start
+the game and make screenshots about the monster matrix.
+After that, they can compare different monster matrix
+screenshots to ensure that game items are displayed 
+randomly in the matrix.
+\item Test-FR9-V9\\
+Type: Functional, Manual, Dynamic\\
+Initial State: Game mode selection message has been
+displayed.\\
+Input/Condition: Testers press \verb|S| to select the
+single-player mode and then start the game.\\
+Output/Result: Game GUI should display a single aircraft.\\
+How test will be performed: Testers can start the game 
+with single-player mode multiple times to check if there
+is only one aircraft displayed on the screen.
+\newpage
+\item Test-FR9-V10\\
+Type: Functional, Manual, Dynamic\\
+Initial State: Game mode selection message has been
+displayed.\\
+Input/Condition: Testers press \verb|D| to select the
+double-player mode and then start the game.\\
+Output/Result: Game GUI should display two aircraft.\\
+How test will be performed: Testers can start the game 
+with double-player mode multiple times to check if there
+are aircraft displayed on the screen.
+\item Test-FR10-V11\\
+Type: Functional, Manual, Dynamic\\
+Initial State: Game instructions and introduction to 
+monsters have been displayed.\\
+Input/Condition: Testers enter the game by pressing any
+key.\\
+Output/Result: The game GUI should display four obstacles
+between the aircraft and the monster matrix.\\
+How test will be performed: Multiple testers can check
+if four obstacles can be displayed in each game round 
+by just playing the game.
+\item Test-FR11-V12\\
+Type: Functional, Manual, Dynamic\\
+Initial State: Testers finish the game either because of 
+winning the game or failing the game.\\
+Input/Condition: No inputs will be given for this test case. But testers should check if final score can be displayed.\\
+Output/Result: The game GUI should display final score.
+How test will be performed: Testers can check if the final score can be displayed once they finish the game.
+\item Test-FR12-V13\\
+Type: Functional, Manual, Dynamic\\
+Initial State: Testers are in game round 5.\\
+Input/Condition: Testers pass game round 5.\\ 
+Output/Result: Game GUI should display ‘WIN!’\\
+How test will be performed: Multiple testers should try
+to pass the game and check if 'WIN!' can be displayed 
+if they pass the game.
+\item Test-FR13-V14\\ 
+Type: Functional, Manual, Dynamic\\
+Initial State: Testers are in any game round.\\
+Input/Condition: Testers lose the current game round.\\
+Output/Result: Game GUI should display ‘FAIL!’\\
+How test will be performed: Multiple testers can fail 
+any game round on purpose and check if 'FAIL!' can 
+be displayed on the screen.
+\newpage
+\item Test-FR14-V15\\
+Type: Functional, Manual, Dynamic\\
+Initial State: 'WIN!' or 'FAIL!' have been 
+displayed.\\
+Input/Condition: No inputs will be given for this test
+case. Testers should check if welcoming message can be
+displayed after 'WIN!' or 'FAIL!' have been displayed.\\ 
+Output/Result: Game GUI should display the 
+welcoming message.\\
+How test will be performed: Multiple testers can try 
+to pass the game or fail the game on purpose and then
+check if game GUI can display the welcoming message after
+displaying 'WIN!' or 'FAIL!'.
+\item Test-FR28-V16\\
+Type: Functional, Manual, Dynamic\\
+Initial State: Testers start a game.\\
+Input/Condition: Testers shoot a green monster once.\\
+Output/Result: The green monster should disappear.\\
+How test will be performed: Testers can start a game and
+shoot green monsters and they should disappear after
+being shot once.
+\item Test-FR28-V17\\
+Type: Functional, Manual, Dynamic\\
+Initial State: Testers start a game.\\
+Input/Condition: Testers shoot a blue monster twice.\\
+Output/Result: The blue monster should disappear.\\
+How test will be performed: Testers can start a game and
+shoot blue monsters and they should disappear after
+being shot twice.
+\item Test-FR28-V18\\
+Type: Functional, Manual, Dynamic\\
+Initial State: Testers start a game.\\
+Input/Condition: Testers shot a pink monster three times.\\
+Output/Result: The pink monster should disappear.\\
+How test will be performed: Testers can start a game and
+shoot pink monsters and they should disappear after
+being shot three times.
+\end{enumerate}
+\subsubsection{Control}
+\begin{enumerate}[1.]
+\item Test-FR17-C1\\
+Type: Functional, Manual, Dynamic\\
+Initial State: Game is not started.\\
+Input/Condition: Testers enter the game and pass through the whole game and record the number of game rounds.\\
+Output/Result: The game should contain 5 rounds in total.\\
+How test will be performed: Testers should continue to play game until it displays ‘WIN!’ then count the total game rounds they played.
+\newpage
+\item Test-FR18-C2\\
+Type: functional, manual, dynamic\\
+Initial State: Game instructions and introduction to 
+monsters have been displayed.\\
+Input/Condition: Testers press any
+key to enter the first game round.\\
+Output/Result: Game GUI should display five rows of green monsters.\\
+How test will be performed: Testers can play game round1
+and check if there are five rows of green monsters.
+\item Test-FR19-C3\\
+Type: functional, manual, dynamic\\
+Initial State: Testers pass the first game round.\\
+Input/Condition: No inputs will be given for this test 
+case. Once game round 1 is passed, the game will
+automatically turn to game round 2.\\
+Output/Result: Game GUI should display 3 rows of green monsters and 2 rows of blue monsters.\\
+How test will be performed: Testers can play game round2
+and check if there are 3 rows of green monsters and 2
+rows of blue monsters.
+\item Test-FR20-C4\\
+Type: functional, manual, dynamic\\
+Initial State: Testers pass the second game round.\\
+Input/Condition: No inputs will be given for this test 
+case. Once game round 2 is passed, the game will
+automatically turn to game round 3.\\
+Output/Result: Game GUI should display 5 rows of blue monsters.\\
+How test will be performed: Testers can play game round3
+and check if there are 5
+rows of blue monsters.
+\item Test-FR21-C5\\
+Type: functional, manual, dynamic\\
+Initial State: Testers pass the third game round.\\
+Input/Condition: No inputs will be given for this test 
+case. Once game round 3 is passed, the game will
+automatically turn to game round 4.\\
+Output/Result: Game GUI should display 1 row of green monsters, 3 rows of blue monsters and 1 row
+ of pink monsters.\\
+How test will be performed: Testers can play game round4
+and check if there are 1 row of green monsters, 3 rows of blue monsters and 1 row of pink monsters.
+\item Test-FR22-C6\\
+Type: functional, manual, dynamic\\
+Initial State: Testers pass the fourth game round.\\
+Input/Condition: No inputs will be given for this test 
+case. Once game round 4 is passed, the game will
+automatically turn to game round 5.\\
+Output/Result: Game GUI should display 5 rows
+of pink monsters.\\
+How test will be performed: Testers can play game round5
+and check if there are 5
+rows of pink monsters.
+\newpage
+\item Test-FR23-C7\\
+Type: functional, manual, dynamic\\
+Initial State: Testers are playing in different game
+rounds.\\
+Input/Condition: No inputs will be given for this 
+test case. Testers should record the movement track of
+the monster matrix.\\
+Output/Result: The monster matrix movement track should
+be east-south-west.\\
+How test will be performed: Testers can play different
+game rounds and record the movement track of monster 
+matrices.
+\item Test-FR24-C8\\
+Type: functional, manual, dynamic\\
+Initial State: Testers are in different game rounds.\\
+Input/Condition: No inputs will be given for this test 
+case. Testers should record how monsters shoot bullets.\\
+Output/Result: Recordings show that monsters shoot
+bullets randomly in different game rounds.\\
+How test will be performed: Multiple testers can play
+ the game at the same time and check if monsters shoot
+  bullets in random ways.
+\item Test-FR35.2-C9\\
+Type: functional, manual, dynamic\\
+Initial State:  Game instructions and introduction to 
+monsters have been displayed.\\
+Input/Condition: Testers press any key.\\
+Output: GUI shows the game.\\
+How test will be performed: Testers can see if they can enter to the game successively by pressing any key
+after game instructions and introduction to 
+monsters have been displayed.
+\item Test-FR36-C10\\
+Type: functional, manual, dynamic\\
+Initial State: Testers are in any game round.\\
+Input/Condition: Testers click cross icon at the right
+top corner.\\
+Output/Result: Game exited.\\
+How test will be performed: Testers can see if they can exit the game successively by clicking the cross icon.
+\item Test-FR37-C11\\
+Type: functional, manual, automated\\
+Initial State:  Aircraft is in a stationary state with position (370,350).\\
+Input/Condition: Testers press $\leftarrow$ or $\rightarrow$\\
+Output/Result: Aircraft new position.\\
+How test will be performed: Testers can call \verb|getX()| on the corresponding \verb|SpaceShip| object to see if the x coordinate decreases when pressing $\leftarrow$ or increases when pressing $\rightarrow$.
+
+\item Test-FR38-C12\\
+Type: functional, manual, dynamic\\
+Initial State: The second aircraft is in a stationary state with position (370,350).\\
+Input/Conditino: Testers press \verb|A| or \verb|D|.\\
+Output/Result: Second aircraft's new position.\\
+How test will be performed: Testers can call \verb|getX()| on the second \verb|SpaceShip| object to see if the x position decreases when pressing \verb|A| or increases when pressing \verb|D|.
+\end{enumerate}
+\textcolor{blue}{NOTE:} There are two \verb|FR35| in our
+SRS document.(This mistake will be revised in our revision1). The test for the first \verb|FR35| is \verb|Test-FR35.1-M13|. The test for the second \verb|FR35| is \verb|Test-FR35.2-C9|.
+\subsection{Tests for Nonfunctional Requirements}
+\subsubsection{Look and Feel Testing}
+\begin{enumerate}[1.]
+\item Test-NFR1-LF1\\
+Type: Dynamic, Automated, Functional\\
+Initial State: Game started.\\
+Input/Condition: Testers use external tool to measure
+ the FPS.\\
+Output/Result: FPS value should always be greater than
+30.\\
+How test will be performed: Testers can record the FPS
+of the game every 10 seconds and measure FPS for 2
+minutes. After that, testers can check if all the 
+values recorded are greater than 30.
+\item Test-NFR2-LF2\\
+Type: Dynamic, Manual, Functional\\
+Initial State: Game started.\\
+Input/Condition: Testers record players' thoughts about 
+the game display.\\
+Output/Result: Over 80\% of people can recognize 
+game elements clearly.\\ 
+How test will be performed: Testing team
+can invite 10 people to play the game and
+8 out of 10 random persons should recognize all the elements clearly.
+\item Test-NFR3-LF3\\
+Type: functional, dynamic, manual\\
+Initial State: Game started.\\
+Input/Condition: No inputs will be given for this 
+test case. Players will be asked about their thoughts
+about the game minimalism.\\
+Output/Result: Over 80\% of players think the game
+follows the style of minimalism.\\
+How test will be performed: Invite 10 random persons to
+play the game and then record their thoughts about the
+game minimalism.
+\item Test-NFR4-LF4\\
+Type: functional, dynamic, manual\\
+Initial State: Game started.\\
+Input/Condition: No inputs will be given for this 
+test case. Players will be asked about their thoughts
+about the game mood.\\
+Output/Result: Over 80\% of players think the game
+mood is intense.\\
+How test will be performed: Invite 10 random persons to
+play the game and then record their thoughts about the
+game mood.
+\end{enumerate}
+\newpage
+\subsubsection{Usability and Humanity Testing}
+\begin{enumerate}[1.]
+\item Test-NFR5-UH1\\
+Type: Dynamic, Manual, Functional\\
+Initial State: Game started.\\
+Input/Condition: No inputs will be given for this test
+case. Child players will be asked about their thoughts
+of the ease of the game.\\
+Output/Result: Over 80\% of child players think the game is easy.\\
+How test will be performed: Testing team can invite
+10 child players to play the game and record their 
+thoughts about the ease of the game. 8 of 10 children
+should think the game is easy.
+\item Test-NFR6-UH2\\
+Type: Dynamic, Manual, Functional\\
+Initial State: Game started.\\
+Input/Condition: No inputs will be given for this 
+test case. Testing team should record the learning time
+of players.\\
+Output/Result: Over 80\% of players should be able to 
+play the game with 5 minutes of less learning time.\\
+How test will be performed:  Testing team can invite
+10 players to play the game and record their learning time. 8 of 10 players should be able to play the game with 5 minutes or less learning time.
+\item Test-NFR7-UH3\\
+Type: Static, Functional, Manual\\
+Initial State: Game instructions have been displayed.\\
+Input/Condition: No inputs will be given for this test
+case. Testing team should record the time needed for 
+players to understand game rules.\\
+Output/Result: All players should understand game rules
+within 10 minutes.\\
+How test will be performed:  Testing team can invite
+10 players to read game instructions and record the time needed for players to fully understand the game instructions.
+All game players should be able to understand game 
+instructions within 10 minutes.
+\end{enumerate}
+\subsubsection{Performance Testing}
+\begin{enumerate}[1.]
+\item Test-NFR8/9-PE1\\
+Type: Dynamic, Functional, Automated\\
+Initial state: Game not started.\\
+Input/Condition: Using external tools to record
+ the response time for each user input.\\
+Output/Result: All the response time should be 
+less than 1 second.\\
+How test will be performed: Testing team starts to play
+the game and tries to pass all game rounds. During this
+process, testing team should record the response time 
+for each user input, all the response time should be 
+less than 1 second.
+\newpage
+\item Test-NFR10-PE2\\
+Type: Functional, Dynamic, Automated\\
+Initial State: Game not started.\\
+Input/Condition: Use an automated program to start the
+game at random times.\\
+Output/Result; The game should start successfully 
+each time.\\
+How test will be performed: Use the automated program
+to start the game 100 times a day and test like this 
+for 5 days. The game should start properly 500 times in 
+total.
+\item Test-NFR11-PE3\\
+Type: Functional, Dynamic, Manual\\
+Initial State: Game mode is chosen to be double-player
+mode.\\
+Input/Condition: Players start to play the game.\\
+Output/Result: Games should run properly for a least 
+2 hours.\\
+How test will be performed: Testing team can invite 
+10 players to play in double-player mode. All 5 games
+should be able to run properly for at least 2 hours.
+\end{enumerate}
+\subsubsection{Operational and Environmental Testing}
+\begin{enumerate}[1.]
+\item Test-NFR12/13-OE1\\
+Type: Dynamic, Functional, Automated\\
+Initial State: Game installed on Windows, Linus and MacOS.\\
+Input/Condition: Using the automated program to run games
+on three different platforms.\\
+Output/Result: Game can run properly over 90\% of the time on three different platforms.\\
+How the test will be performed: Testing team can use
+ the automated program to run the game on three different 
+ platforms 100 times. The game should be able to run 
+ properly over 90 times.
+\item Test-NFR14-OE2\\
+Type: Functional, Dynamic, Automated\\
+Initial State: All source codes are implemented.\\
+Input/Condition: Execute 
+command which can generate \verb|.exe| file for the game.\\
+Output/Result: \verb|.exe| file can be generated successfully.\\
+How test will be performed: Testing team can use
+automated program to execute command which can generate
+\verb|.exe| file for the game. 
+\item Test-NFR15-OE3\\
+Type: Functional, Dynamic, Manual\\
+Initial State: Game not installed.\\
+Input/Condition: No inputs will be given for this test 
+case. Testing team will let players to install the game
+and record the installation 
+process.\\
+Output/Result: Players should be able to install without
+any problems.\\
+How the test will be performed: Testing team can 
+invite 10 people and let them to install the game. All
+10 people should not have any problems installing the 
+game.
+\end{enumerate} \newpage
+\subsubsection{Maintainability and Support Testing}
+\begin{enumerate}[1.]
+\item Test-NRF16-MS1\\
+Type: Manual\\
+Initial state: A new feature is decided to add to
+the game. (The feature here means the feature may
+be added after the game is released).\\
+Input/Condition: Development team starts to
+prepare MIS and coding. After that, development
+team tests the newly added feature.\\
+Output/Result:The process mentioned above (Writing
+MIS, coding and testing) should be completed
+within two weeks.\\
+How test will be performed: After the game is 
+released, project manager should come up with a 
+new feature and let development team to implement this new feature. As a result, we can time how 
+long this new feature can be implemented.
+\item Test-NRF17-MS2\\
+Type: Manual, Dynamic, Automated\\
+Initial State: Testers open source code and 
+terminal.\\
+Input/Condition: Testers type command in terminal
+in order to generate doxygen files.\\
+Output/Result: Doxygen files should be generated
+successfully and all contents are correct.\\
+How test will be performed: Testers can try to generate doxygen files in terminal. After 
+generating all the doxygen files, testers should
+check if doxygen files contents can match 
+the source code.
+\item Test-NFR18-MS3\\
+Type: Manual\\
+Initial state: Development team has already read 
+all the previous messages from players.\\
+Input/Condition: Testing team leaves a message to the
+development team.\\
+Output/Result: Testing team should receive a response from the development team.\\
+How test will be performed: Testing team leaves an
+advice to the development team in its project repo. After that, testing team will check if they
+can receive the response from the development 
+team.
+\item Test-NFR19-MS4\\
+Type: Dynamic, Manual\\
+Initial state: Three computers with three 
+different operating systems(Windows, Linux, MacOS) do not have our 
+game installed.\\
+Input/Condition: Testing team tries to install 
+our game in three computers.\\
+Output/Result: Three installations are successful and our game can run properly on three operating
+systems.\\
+How test will be performed: Testing team tries to
+install and run game in three different operating
+systems and use a checklist to show that game can
+run properly in three operating systems.
+\end{enumerate}
+\newpage
+\subsubsection{Security Testing}
+\begin{enumerate}[1.]
+\item Test-NFR20-SE1\\
+Type: Manual, Dynamic\\
+Initial State: In double-player game mode.\\
+Input/Condition:Two testers control two aircraft. "Controlling two aircraft" means moving them left and right and shooting bullets 
+from two aircraft.\\
+Output/Result: A specific aircraft can only 
+be controlled by the corresponding player. For example, aircraft1 should not be controlled by 
+tester2 and aircraft2 should not be controlled by 
+tester1.\\
+How test will be performed: Two testers start a 
+new game and chooses double-player mode. Tester1 
+controls aircraft1 and tester2 controls aircraft2. The following three scenarios should
+be tested:
+\begin{itemize}
+\item Aircraft1 moves and aircraft2 stays still.
+\item Aircraft2 moves and aircraft1 stays still.
+\item Two aircraft move concurrently.
+\end{itemize}
+For all three scenarios mentioned above, two 
+aircraft should only be controlled by the 
+correspond tester.
+\item Test-NF21-SE2\\
+Type: Manual, Static\\
+Initial State: There exists a variable or file(depending on the design decision) to store 
+the highest score.\\
+Input/Condition: Testing team tries to read from and write to variable/file which stores the highest score.\\
+Output/Result: Such access should be denied.\\
+How test will be performed: 
+\begin{itemize}
+\item If the highest score is stored in a variable,
+testing team can do code inspection to make sure 
+that this variable is private and there are no
+getter and setter for this variable.
+\item If the highest score is stored in a file, 
+this file should display "encrypted" when tester 
+tries to access it. 
+\end{itemize}
+\end{enumerate}
+\subsubsection{Cultural and Political Testing}
+\begin{enumerate}[1.]
+\item Test-NFR22-CP1\\
+Type: Manual, Dynamic\\
+Initial state: Game not started.\\
+Input/Condition: Testing team starts to play game
+and record the process of playing.\\
+Output/Result: There should not be any offensive
+messages or images in the recording.\\
+How test will be performed: Testing team starts to
+play the game and record the screen. After that, 
+testing team will analysis the recording to ensure
+that there are no offensive messages or pictures.
+\end{enumerate}
+\subsubsection{Legal Testing}
+\begin{enumerate}[1.]
+\item Test-NF23-LE1
+Type: Manual, Dynamic\\
+Initial state: Game not started.\\
+Input/Condition: Testing team starts to play game
+and record the process of playing.\\
+Output/Result: There should not be any illegal things in the recording.\\
+How test will be performed: Testing team starts to
+play the game and record the screen. After that, 
+testing team will analysis the recording to ensure
+that everything is legal. Maybe testing team can
+invite domain experts.
+\end{enumerate}
+\subsubsection{Health and Safety Testing}
+\begin{enumerate}[1.]
+\item Test-NF24-HS1
+Type: Functional, Dynamic, Manual\\
+Initial state: Game not started.\\
+Input/Condition: Testers start the game.\\
+Output/Result: GUI shows a message to notify the 
+player to avoid game addiction with the welcoming 
+message.\\
+How test will be performed: Testing team should 
+run the program and make sure that game addiction
+avoidance message is showed with the welcoming message.
+\end{enumerate}
+\subsection{Traceability Between Test Cases and Requirements}
+\subsubsection{Model Traceability Matrices}
+\begin{table}[htp]
+\centering
+\caption{Model Traceability Matrix 1}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+Tests/Requirement & FR15 & FR16 & FR25 & FR26 & FR27 & FR29 \\
+\hline
+Test-FR15-M1      & X    &      &      &      &      &      \\
+\hline
+Test-FR16-M2      &      & X    &      &      &      &      \\
+\hline
+Test-FR16-M3      &      & X    &      &      &      &      \\
+\hline
+Test-FR25-M4      &      &      & X    &      &      &      \\
+\hline
+Test-FR26-M5      &      &      &      & X    &      &      \\
+\hline
+Test-FR27-M6      &      &      &      &      & X    &      \\
+\hline
+Test-FR29-M7      &      &      &      &      &      & X\\
+\hline   
+\end{tabular}
+\end{table}
+\begin{table}[htp]
+\centering
+\caption{Model Traceability Matrix 2}
+\begin{tabular}{|c|c|c|c|c|c|c|l|}
+\hline
+Tests/Requirement & FR30 & FR31 & FR32 & FR33 & FR34 & FR35.1 & FR39 \\
+\hline
+Test-FR30-M8      & X    &      &      &      &      &        &      \\
+\hline
+Test-FR31-M9      &      & X    &      &      &      &        &      \\
+\hline
+Test-FR32-M10     &      &      & X    &      &      &        &      \\
+\hline
+Test-FR33-M11     &      &      &      & X    &      &        &      \\
+\hline
+Test-FR34-M12     &      &      &      &      & X    &        &      \\
+\hline
+Test-FR35.1-M13   &      &      &      &      &      & X      &      \\
+\hline
+Test-FR39-M14     &      &      &      &      &      &        & X   \\
+\hline
+\end{tabular}
+\end{table}
+\newpage
+\subsubsection{View Traceability Matrices}
+\begin{table}[htp]
+\centering
+\caption{View Traceability Matrix 1}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+Tests/Requirement & FR1 & FR2 & FR3 & FR4 & FR5 & FR6 & FR7 & FR8 & FR9 \\
+\hline
+Test-FR1-V1       & X   &     &     &     &     &     &     &     &     \\
+\hline
+Test-FR2-V2       &     & X   &     &     &     &     &     &     &     \\
+\hline
+Test-FR3-V3       &     &     & X   &     &     &     &     &     &     \\
+\hline
+Test-FR4-V4       &     &     &     & X   &     &     &     &     &     \\
+\hline
+Test-FR5-V5       &     &     &     &     & X   &     &     &     &     \\
+\hline
+Test-FR6-V6       &     &     &     &     &     & X   &     &     &     \\
+\hline
+Test-FR7-V7       &     &     &     &     &     &     & X   &     &     \\
+\hline
+Test-FR8-V8       &     &     &     &     &     &     &     & X   &     \\
+\hline
+\end{tabular}
+\end{table}
+\begin{table}[htp]
+\centering
+\caption{View Traceability Matrix 2}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+TestCase\textbackslash{}Requirements & FR9 & FR10 & FR11 & FR12 & FR13 & FP14 & FR28 \\ \hline
+Test-FR9-V9                          & X   &      &      &      &      &      &      \\ \hline
+Test-FR9-V10                         & X   &      &      &      &      &      &      \\ \hline
+Test-FR10-V11                        &     & X    &      &      &      &      &      \\ \hline
+Test-FR11-V12                        &     &      & X    &      &      &      &      \\ \hline
+Test-FR12-V13                        &     &      &      & X    &      &      &      \\ \hline
+Test-FR13-V14                        &     &      &      &      & X    &      &      \\ \hline
+Test-FR14-V15                        &     &      &      &      &      & X    &      \\ \hline
+Test-FR28-V16                        &     &      &      &      &      &      & X    \\ \hline
+Test-FR28-V17                        &     &      &      &      &      &      & X    \\ \hline
+Test-FR28-V18                        &     &      &      &      &      &      & X    \\ \hline
+\end{tabular}
+\end{table}
+\newpage
+\subsubsection{Control Traceability Matrices}
+\begin{table}[htp]
+\centering
+\caption{Control Traceability Matrix 1}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+Tests/Requirement & FR17 & FR18 & FR19 & FR20 & FR21 & FR22 \\
+\hline
+Test-FR17-C1      & X    &      &      &      &      &      \\
+\hline
+Test-FR18-C2      &      & X    &      &      &      &      \\
+\hline
+Test-FR19-C3      &      &      & X    &      &      &      \\
+\hline
+Test-FR20-C4      &      &      &      & X    &      &      \\
+\hline
+Test-FR21-C5      &      &      &      &      & X    &      \\
+\hline
+Test-FR22-C6      &      &      &      &      &      & X   \\
+\hline
+\end{tabular}
+\end{table}
+\begin{table}[htp]
+\centering
+\caption{Control Traceability Matrix 2}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+Tests/Requirement & FR23 & FR24 & FR35.2 & FR36 & FR37 & FR38 \\
+\hline
+Test-FR23-C7      & X    &      &        &      &      &      \\
+\hline
+Test-FR24-C8      &      & X    &        &      &      &      \\
+\hline
+Test-FR35.2-C9    &      &      & X      &      &      &      \\
+\hline
+Test-FR36-C10     &      &      &        & X    &      &      \\
+\hline
+Test-FR37-C11     &      &      &        &      & X    &      \\
+\hline
+Test-FR38-C12     &      &      &        &      &      & X   \\
+\hline
+\end{tabular}
+\end{table}
+\newpage
+\subsubsection{Nonfunctional Req Test Matrices}
+\begin{table}[htp]
+\centering
+\caption{Nonfunctional Req Test Matrix 1}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+Tests/Requirement & NFR1 & NFR2 & NFR3 & NFR4 & NFR5 & NFR6 & NFR7 \\
+\hline
+Test-NFR1-LF1     & X    &      &      &      &      &      &      \\
+\hline
+Test-NFR2-LF2     &      & X    &      &      &      &      &      \\
+\hline
+Test-NFR3-LF3     &      &      & X    &      &      &      &      \\
+\hline
+Test-NFR4-LF4     &      &      &      & X    &      &      &      \\
+\hline
+Test-NFR5-UH1     &      &      &      &      & X    &      &      \\
+\hline
+Test-NFR6-UH2     &      &      &      &      &      & X    &      \\
+\hline
+Test-NFR7-UH3     &      &      &      &      &      &      & X\\
+\hline   
+\end{tabular}
+\end{table}
+\begin{table}[htp]
+\centering
+\caption{Nonfunctional Req Test Matrix 2}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+Tests/Requirement & NFR8 & NFR9 & NFR10 & NFR11 & NFR12 & NFR13 & NFR14 & NFR15 & NFR16 \\
+\hline
+Test-NFR8/9-PE1   & X    & X    &       &       &       &       &       &       &       \\
+\hline
+Test-NFR10-PE2    &      &      & X     &       &       &       &       &       &       \\
+\hline
+Test-NFR11-PE3    &      &      &       & X     &       &       &       &       &       \\
+\hline
+Test-NFR12/13-OE1 &      &      &       &       & X     & X     &       &       &       \\
+\hline
+Test-NFR14-OE2    &      &      &       &       &       &       & X     &       &       \\
+\hline
+Test-NFR15-OE3    &      &      &       &       &       &       &       & X     &       \\
+\hline
+Test-NFR16-MS1    &      &      &       &       &       &       &       &       & X    \\ \hline
+\end{tabular}
+\end{table}
+\begin{table}[htp]
+\centering
+\caption{Nonfunctional Req Test Matrix 3}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+Tests/Requirement & NFR17 & NFR18 & NFR19 & NFR20 & NFR21 & NFR22 & NFR23 & NFR24 \\  \hline
+Test-NFR17-MS2    & X     &       &       &       &       &       &       &       \\  \hline
+Test-NFR18-MS3    &       & X     &       &       &       &       &       &       \\  \hline
+Test-NFR19-MS4    &       &       & X     &       &       &       &       &       \\  \hline
+Test-NFR20-SE1    &       &       &       & X     &       &       &       &       \\  \hline
+Test-NFR21-SE2    &       &       &       &       & X     &       &       &       \\  \hline
+Test-NFR22-CP1    &       &       &       &       &       & X     &       &       \\  \hline
+Test-NFR23-LE1    &       &       &       &       &       &       & X     &       \\ \hline
+Test-NFR24-HS1    &       &       &       &       &       &       &       & X    \\ \hline
+\end{tabular}
+\end{table}
+\newpage
+\section{Tests for Proof of Concept}
+For the POC demo, we only implemented one aircraft and 
+three monsters with three different colors. As a result,
+our testing areas will be Aircraft and Monster.
+\subsection{Aircraft Tests}
+\begin{enumerate}[1.]
+\item Test1-POC\\
+Type: Functional, Dynamic, Manual\\
+Initial State: One aircraft is displayed on the screen.\\
+Input/Condition: Players press $\leftarrow$ key.\\
+Output/Result: Aircraft moves to the left.\\
+How the test will be performed: Developers start the 
+game by executing \verb|python Driver.py| and then press
+$\leftarrow$ to check if aircraft can move left.
+\item Test2-POC
+Type: Functional, Dynamic, Manual\\
+Initial State: One aircraft is displayed on the screen.\\
+Input/Condition: Players press $\rightarrow$ key.\\
+Output/Result: Aircraft moves to the right.\\
+How the test will be performed: Developers start the 
+game by executing \verb|python Driver.py| and then press
+$\rightarrow$ to check if aircraft can move right.
+\item Test3-POC\\
+Type: Functional, Manual, Dynamic\\
+Initial State: One aircraft is displayed on the screen.\\
+Input/Condition: Players press \verb|SPACE| key.\\
+Output/Result: Aircraft shoots one bullet.\\
+How the test will be performed: Developers start the 
+game by executing \verb|python Driver.py| and then press
+\verb|SPACE| to check if aircraft can shoot one bullet.
+\end{enumerate}
+\subsection{Monster Tests}
+\begin{enumerate}[1.]
+\item Test-POC4\\
+Type: Functional, Dynamic, Manual\\
+Initial State: One green monster is displayed on the screen.\\
+Input/Condition: Shoot one bullet to the green monster.\\
+Output/Result: Green monster disappears.\\
+How the test will be performed: Developers start the 
+game by executing \verb|python Driver.py| and then shoot
+one bullet the green monster.
+\item Test-POC5\\
+Type: Functional, Dynamic, Manual\\
+Initial State: One blue monster is displayed on the screen.\\
+Input/Condition: Shoot two bullets to the blue monster.\\
+Output/Result: Blue monster disappears.\\
+How the test will be performed: Developers start the 
+game by executing \verb|python Driver.py| and then shoot
+two bullets the blue monster.
+\item Test-POC6\\
+Type: Functional, Dynamic, Manual\\
+Initial State: One pink monster is displayed on the screen.\\
+Input/Condition: Shoot three bullets to the pink monster.\\
+Output/Result: Pink monster disappears.\\
+How the test will be performed: Developers start the 
+game by executing \verb|python Driver.py| and then shoot
+three bullets the pink monster.
+\end{enumerate}
+\section{Comparison to Existing  Implementation}
+When this document is finished, the following contents
+have been implemented:
+\begin{itemize}
+\item Monster Model
+\item SpaecShip Model
+\item Score Model
+\item Bullet Model
+\item Single Player Controller
+\item Background, Title and Icon
+\item The corresponding views of the four models
+\end{itemize}
+\section{Unit Testing Plan}
+\subsection{Unit testing of internal functions}
+Unit tests for this project will mainly be applied to test
+our models. The unit testing frame we choose is \verb|Pytest|. The following are steps for of unit testing:
+\begin{enumerate}[1.]
+\item Create object from different model class.
+\item Provide different inputs and call different methods.
+\item Compare the return values with the excepted values.
+\end{enumerate}
+Some sample examples for  unit testing:
+\begin{itemize}
+\item Monster Class
+\begin{itemize}
+\item \verb|reduce_life()|
+\item \verb|isDead()|
+\item setter and getters for x, y coordinates.
+\end{itemize}
+\item Score Class
+\begin{itemize}
+\item \verb|increaseScore()|
+\item \verb|getScore()|
+\end{itemize}
+\end{itemize}
+\subsection{Unit testing of output files}
+This game will not generate and output files. As a result,
+no unit tests will be applicable for output files.
+\section{Appendix}
+\subsection{Symbolic Parameters}
+\begin{itemize}
+\item \verb|DEFAULT_SPACESHIP_SPEED = 3|
+\item \verb|DEFAULT_SPACESHIP_X = 370|
+\item \verb|DEFAULT_SPACESHIP_Y = 530|
+\item \verb|DEFAULT_MONSTER_SPEED = 1|
+\item \verb|DEFAULT_BULLET_SPEED = 20|
+\end{itemize}
+\subsection{Usability Survey Questions}
+\begin{itemize}
+\item How would you describe the difficulty of this game?
+(Level 10 is the most difficult and level 1 is the 
+least difficult)
+\item Do you have any recommended features that we should
+implement in the future?
+\item Is this game difficult to learn to play? (Level 10 is the most difficult and level 1 is the 
+least difficult)
+\end{itemize}
+\end {document}

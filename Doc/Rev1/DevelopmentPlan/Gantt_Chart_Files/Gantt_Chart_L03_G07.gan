@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?><project name="Grant Project" company="" webLink="http://" view-date="2022-01-04" view-index="0" gantt-divider-location="755" resource-divider-location="300" version="3.1.3100" locale="en_US">
+    <description>
+        <![CDATA[This is a grant project for the development of game 'Space Invader'.]]>
+    </description>
+    <view zooming-state="default:3" id="gantt-chart">
+        <field id="tpd3" name="Name" width="320" order="0"/>
+        <field id="tpd4" name="Begin date" width="216" order="1"/>
+        <field id="tpd5" name="End date" width="215" order="2"/>
+        <timeline>
+            <![CDATA[0]]>
+        </timeline>
+        <option id="color.recent">
+            <![CDATA[#99cc00 #eeeeee]]>
+        </option>
+    </view>
+    <view id="resource-table">
+        <field id="0" name="Name" width="210" order="0"/>
+        <field id="1" name="Default role" width="86" order="1"/>
+    </view>
+    <!-- -->
+    <calendars>
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <default-week id="1" name="default" sun="1" mon="0" tue="0" wed="0" thu="0" fri="0" sat="1"/>
+            <only-show-weekends value="true"/>
+            <overriden-day-types/>
+            <days/>
+        </day-types>
+    </calendars>
+    <tasks empty-milestones="true">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+        </taskproperties>
+        <task id="0" name="1: Team Formation" color="#8cb6ce" meeting="true" start="2022-01-17" duration="0" complete="100" thirdDate="2022-01-17" thirdDate-constraint="0" expand="true"/>
+        <task id="64" name="2: Project Approval" color="#8cb6ce" meeting="false" start="2022-01-17" duration="7" complete="0" thirdDate="2021-12-27" thirdDate-constraint="0" expand="false">
+            <task id="65" name="2.1: Project Identification" color="#8cb6ce" meeting="true" start="2022-01-17" duration="0" complete="0" thirdDate="2021-12-27" thirdDate-constraint="0" expand="true"/>
+            <task id="67" name="2.2: Approval Documentation" color="#8cb6ce" meeting="false" start="2022-01-19" duration="4" complete="0" thirdDate="2021-12-27" thirdDate-constraint="0" expand="true"/>
+            <task id="176" name="Due" color="#8cb6ce" meeting="true" start="2022-01-24" duration="0" complete="0" thirdDate="2021-12-19" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="8" name="3: Problem Statement" color="#8cb6ce" meeting="false" start="2022-01-24" duration="5" complete="0" thirdDate="2022-01-12" thirdDate-constraint="0" expand="false">
+            <task id="85" name="3.1: Team Meeting" color="#8cb6ce" meeting="true" start="2022-01-24" duration="0" complete="0" thirdDate="2021-12-27" thirdDate-constraint="0" expand="true"/>
+            <task id="87" name="3.2: Document" color="#8cb6ce" meeting="false" start="2022-01-25" duration="4" complete="0" thirdDate="2021-12-27" thirdDate-constraint="0" expand="false">
+                <task id="149" name="3.2.1: Identify Problem" color="#8cb6ce" meeting="false" start="2022-01-25" duration="4" complete="0" thirdDate="2022-01-24" thirdDate-constraint="0" expand="true"/>
+                <task id="150" name="3.2.2: Identify Importance of Problem" color="#8cb6ce" meeting="false" start="2022-01-25" duration="4" complete="0" thirdDate="2022-01-24" thirdDate-constraint="0" expand="true"/>
+                <task id="152" name="3.2.3: Define Problem Context" color="#8cb6ce" meeting="false" start="2022-01-25" duration="4" complete="0" thirdDate="2022-01-24" thirdDate-constraint="0" expand="true"/>
+            </task>
+            <task id="170" name="Due" color="#8cb6ce" meeting="true" start="2022-01-29" duration="0" complete="0" thirdDate="2021-12-20" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="13" name="4: Development Plan" color="#8cb6ce" meeting="false" start="2022-01-31" duration="5" complete="0" thirdDate="2022-01-12" thirdDate-constraint="0" expand="false" cost-manual-value="0.0" cost-calculated="true">
+            <task id="37" name="4.1: Team Meeting" color="#8cb6ce" meeting="true" start="2022-01-31" duration="0" complete="0" thirdDate="2022-01-03" thirdDate-constraint="0" expand="true" cost-manual-value="0.0" cost-calculated="true">
+                <notes>
+                    <![CDATA[Define roles in team.
+Assign different tasks of development plan for each team members.]]>
+                </notes>
+            </task>
+            <task id="46" name="4.2: Document" color="#8cb6ce" meeting="false" start="2022-02-01" duration="4" complete="0" thirdDate="2021-12-27" thirdDate-constraint="0" expand="true" cost-manual-value="0.0" cost-calculated="true">
+                <task id="48" name="4.2.1: Document Team Information" color="#8cb6ce" meeting="false" start="2022-02-01" duration="4" complete="0" thirdDate="2021-12-27" thirdDate-constraint="0" expand="true" cost-manual-value="0.0" cost-calculated="true">
+                    <notes>
+                        <![CDATA[Team number, team name, team members.
+Team meeting plan.
+Team communication plan.
+Team member roles.]]>
+                    </notes>
+                </task>
+                <task id="50" name="4.2.2: Document Coding Style and Project Schedule" color="#8cb6ce" meeting="false" start="2022-02-01" duration="4" complete="0" thirdDate="2021-12-27" thirdDate-constraint="0" expand="true" cost-manual-value="0.0" cost-calculated="true"/>
+                <task id="54" name="4.2.3: Document Rest Parts" color="#8cb6ce" meeting="false" start="2022-02-01" duration="4" complete="0" thirdDate="2021-12-27" thirdDate-constraint="0" expand="true" cost-manual-value="0.0" cost-calculated="true">
+                    <notes>
+                        <![CDATA[Including Git Workflow Plan,  Development Technology and Proof Of Concept Demonstration Plan.]]>
+                    </notes>
+                </task>
+            </task>
+            <task id="188" name="Due" color="#8cb6ce" meeting="true" start="2022-02-05" duration="0" complete="0" thirdDate="2021-12-19" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="15" name="5: Requirements Docs Revision 0" color="#8cb6ce" meeting="false" start="2022-02-07" duration="5" complete="0" thirdDate="2022-01-05" thirdDate-constraint="0" expand="false">
+            <task id="193" name="5.1: Team meeting" color="#8cb6ce" meeting="true" start="2022-02-07" duration="0" complete="0" thirdDate="2022-01-02" thirdDate-constraint="0" expand="true"/>
+            <task id="195" name="Due" color="#8cb6ce" meeting="true" start="2022-02-12" duration="0" complete="0" thirdDate="2022-01-02" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="17" name="6: Proof of Concept Demonstration" color="#8cb6ce" meeting="false" start="2022-02-21" duration="4" complete="0" thirdDate="2022-01-27" thirdDate-constraint="0" expand="false">
+            <task id="200" name="6.1: Team meeting" color="#8cb6ce" meeting="true" start="2022-02-21" duration="0" complete="0" thirdDate="2022-01-02" thirdDate-constraint="0" expand="true"/>
+            <task id="201" name="Due" color="#8cb6ce" meeting="true" start="2022-02-25" duration="0" complete="0" thirdDate="2022-01-02" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="19" name="7: Test Plan Revesion 0" color="#8cb6ce" meeting="false" start="2022-02-28" duration="4" complete="0" thirdDate="2022-01-28" thirdDate-constraint="0" expand="false">
+            <task id="204" name="7.1: Team meeting" color="#8cb6ce" meeting="true" start="2022-02-28" duration="0" complete="0" thirdDate="2022-01-02" thirdDate-constraint="0" expand="true"/>
+            <task id="205" name="Due" color="#8cb6ce" meeting="true" start="2022-03-04" duration="0" complete="0" thirdDate="2022-01-02" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="22" name="8: Design and Doc Revesion 0" color="#8cb6ce" meeting="false" start="2022-03-07" duration="11" complete="0" thirdDate="2022-01-19" thirdDate-constraint="0" expand="false">
+            <task id="208" name="8.1: Team meeting" color="#8cb6ce" meeting="true" start="2022-03-07" duration="0" complete="0" thirdDate="2022-01-02" thirdDate-constraint="0" expand="true"/>
+            <task id="210" name="Due" color="#8cb6ce" meeting="true" start="2022-03-18" duration="0" complete="0" thirdDate="2022-01-02" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="24" name="9: Revesion 0 Demonstration" color="#8cb6ce" meeting="false" start="2022-03-21" duration="4" complete="0" thirdDate="2022-01-12" thirdDate-constraint="0" expand="false">
+            <task id="212" name="9.1: Team meeting" color="#8cb6ce" meeting="true" start="2022-03-21" duration="0" complete="0" thirdDate="2022-01-02" thirdDate-constraint="0" expand="true"/>
+            <task id="214" name="Due" color="#8cb6ce" meeting="true" start="2022-03-25" duration="0" complete="0" thirdDate="2022-01-02" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="26" name="10: Final Demonstration" color="#8cb6ce" meeting="false" start="2022-04-05" duration="3" complete="0" thirdDate="2022-01-10" thirdDate-constraint="0" expand="false">
+            <task id="216" name="10.1: Team meeting" color="#8cb6ce" meeting="true" start="2022-04-05" duration="0" complete="0" thirdDate="2022-01-02" thirdDate-constraint="0" expand="true"/>
+            <task id="218" name="Due" color="#8cb6ce" meeting="true" start="2022-04-08" duration="0" complete="0" thirdDate="2022-01-02" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="31" name="11: Peer Eval of Final Demo" color="#8cb6ce" meeting="false" start="2022-04-05" duration="3" complete="0" thirdDate="2022-01-03" thirdDate-constraint="0" expand="false">
+            <task id="220" name="11.1: Team meeting" color="#8cb6ce" meeting="true" start="2022-04-05" duration="0" complete="0" thirdDate="2022-01-02" thirdDate-constraint="0" expand="true"/>
+            <task id="222" name="Due" color="#8cb6ce" meeting="true" start="2022-04-08" duration="0" complete="0" thirdDate="2022-01-02" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="145" name="12: Final Documentation" color="#8cb6ce" meeting="false" start="2022-04-08" duration="4" complete="0" thirdDate="2021-12-27" thirdDate-constraint="0" expand="false">
+            <task id="227" name="12.1 Team meeting" color="#8cb6ce" meeting="true" start="2022-04-08" duration="0" complete="0" thirdDate="2022-01-09" thirdDate-constraint="0" expand="true"/>
+            <task id="225" name="Due" color="#8cb6ce" meeting="true" start="2022-04-12" duration="0" complete="0" thirdDate="2022-01-09" thirdDate-constraint="0" expand="true"/>
+        </task>
+    </tasks>
+    <resources>
+        <resource id="0" name="Tingyu Shi" function="SoftwareDevelopment:2" contacts="shit19@mcmaster.ca" phone=""/>
+        <resource id="1" name="Jiacheng Wu" function="SoftwareDevelopment:2" contacts="" phone=""/>
+        <resource id="2" name="Qianlin Chen" function="SoftwareDevelopment:2" contacts="" phone=""/>
+    </resources>
+    <allocations>
+        <allocation task-id="0" resource-id="0" function="SoftwareDevelopment:4" responsible="true" load="40.0"/>
+        <allocation task-id="65" resource-id="0" function="SoftwareDevelopment:2" responsible="true" load="34.0"/>
+        <allocation task-id="67" resource-id="0" function="SoftwareDevelopment:2" responsible="true" load="34.0"/>
+        <allocation task-id="85" resource-id="0" function="SoftwareDevelopment:2" responsible="true" load="34.0"/>
+        <allocation task-id="37" resource-id="0" function="SoftwareDevelopment:2" responsible="true" load="34.0"/>
+        <allocation task-id="54" resource-id="0" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="152" resource-id="0" function="SoftwareDevelopment:2" responsible="false" load="100.0"/>
+        <allocation task-id="0" resource-id="1" function="SoftwareDevelopment:2" responsible="false" load="30.0"/>
+        <allocation task-id="65" resource-id="1" function="SoftwareDevelopment:2" responsible="false" load="33.0"/>
+        <allocation task-id="67" resource-id="1" function="SoftwareDevelopment:2" responsible="false" load="33.0"/>
+        <allocation task-id="85" resource-id="1" function="SoftwareDevelopment:2" responsible="false" load="33.0"/>
+        <allocation task-id="37" resource-id="1" function="SoftwareDevelopment:2" responsible="false" load="33.0"/>
+        <allocation task-id="48" resource-id="1" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="149" resource-id="1" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="0" resource-id="2" function="SoftwareDevelopment:2" responsible="false" load="30.0"/>
+        <allocation task-id="67" resource-id="2" function="SoftwareDevelopment:2" responsible="false" load="33.0"/>
+        <allocation task-id="65" resource-id="2" function="SoftwareDevelopment:2" responsible="false" load="33.0"/>
+        <allocation task-id="85" resource-id="2" function="SoftwareDevelopment:2" responsible="false" load="33.0"/>
+        <allocation task-id="37" resource-id="2" function="SoftwareDevelopment:2" responsible="false" load="33.0"/>
+        <allocation task-id="50" resource-id="2" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="150" resource-id="2" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+    </allocations>
+    <vacations>
+        <vacation start="2022-02-21" end="2022-02-28" resourceid="0"/>
+        <vacation start="2022-02-21" end="2022-02-28" resourceid="1"/>
+        <vacation start="2022-02-21" end="2022-02-28" resourceid="2"/>
+    </vacations>
+    <previous/>
+    <roles roleset-name="Default"/>
+    <roles roleset-name="SoftwareDevelopment"/>
+</project>
